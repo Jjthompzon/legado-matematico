@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Legado Matemático | Portafolio Digital de Historia de las Matemáticas - UNAD</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- KaTeX para renderizado de fórmulas matemáticas -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" 
+          onload="renderMathInElement(document.body);"></script>
+
+  <!-- Estilos propios -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Aviso Superior Institucional -->
+  <div class="top-notice">
+    Universidad Nacional Abierta y a Distancia (UNAD) &bull; Escuela de Ciencias de la Educación (ECEDU) &bull; 
+    <strong>Licenciatura en Matemáticas</strong> &bull; Código: 551104
+  </div>
+
+  <!-- Barra de Navegación Fija -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="#inicio" class="brand">
+        <div class="brand-icon">π</div>
+        <div class="brand-text">
+          <h1>LEGADO MATEMÁTICO</h1>
+          <p>Patrimonio Histórico de las Matemáticas</p>
+        </div>
+      </a>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú de navegación">&#9776;</button>
+
+      <nav>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="#inicio" class="active">Inicio</a></li>
+          <li><a href="#linea-tiempo">Línea de Tiempo</a></li>
+          <li><a href="#personajes">Personajes</a></li>
+          <li><a href="#entrevista">Entrevista</a></li>
+          <li><a href="#laboratorio">Laboratorio Interactivo</a></li>
+          <li><a href="#evidencias">Evidencias</a></li>
+          <li><a href="#conclusiones">Conclusiones</a></li>
+          <li><a href="#referencias">Referencias</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero" id="inicio">
+    <div class="hero-container">
+      <div class="hero-badges">
+        <span class="badge badge-gold">Fase 3 &bull; Construyendo el Patrimonio Histórico</span>
+        <span class="badge badge-blue">Licenciatura en Matemáticas</span>
+        <span class="badge badge-blue">CEAD Soacha</span>
+      </div>
+
+      <h2>
+        Legado Matemático
+        <span>Patrimonio Histórico y Epistemológico de las Matemáticas</span>
+      </h2>
+
+      <p class="hero-lead">
+        Un espacio digital interactivo diseñado para investigar, reconstruir y divulgar las grandes 
+        revoluciones del pensamiento matemático: desde la agrimensura y la geometría clásica helenística, 
+        hasta el nacimiento del cálculo infinitesimal y su valor transformador en la formación docente.
+      </p>
+
+      <div class="meta-grid">
+        <div class="meta-card">
+          <span>Estudiante Autor</span>
+          <strong>Jhon Sebastian Bautista Hernandez</strong>
+        </div>
+        <div class="meta-card">
+          <span>Código / Documento</span>
+          <strong>1052406588</strong>
+        </div>
+        <div class="meta-card">
+          <span>Tutor del Curso</span>
+          <strong>Julián David Segura Peña</strong>
+        </div>
+        <div class="meta-card">
+          <span>Grupo Colaborativo</span>
+          <strong>551104_45 &bull; UNAD 2026</strong>
+        </div>
+      </div>
+
+      <div class="hero-actions">
+        <a href="#personajes" class="btn btn-primary">Explorar Reseña de Arquímedes &rarr;</a>
+        <a href="#laboratorio" class="btn btn-secondary">Probar Laboratorio Interactivo de Exhaución (π)</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contenido Principal -->
+  <main class="main-wrapper">
+
+    <!-- SECCIÓN 1: BIENVENIDA Y ARQUITECTURA -->
+    <section class="section-block" id="bienvenida">
+      <div class="section-header">
+        <span class="section-subtitle">Presentación del Portafolio</span>
+        <h3>Bienvenida y Propósito Académico</h3>
+      </div>
+
+      <div class="welcome-grid">
+        <div class="welcome-text">
+          <p>
+            La historia de las matemáticas demuestra que los conceptos que hoy se imparten en las aulas escolares y 
+            universitarias no surgieron como dogmas acabados ni estructuras abstractas desconectadas de la realidad. Son, por 
+            el contrario, la respuesta sistemática a profundas preguntas humanas, desafíos de ingeniería civil, dilemas 
+            filosóficos y necesidades operativas de civilizaciones enteras (Bisagra, 2020; Boyer, 1986).
+          </p>
+          <p>
+            En esta <strong>Fase 3</strong>, titulada <em>«Construyendo el patrimonio histórico de las matemáticas»</em>, 
+            consolidamos este portafolio digital como un entorno articulador donde convergen las investigaciones sobre las 
+            primeras civilizaciones (Fase 1 y 2), la entrevista en video subtitulado, el análisis epistemológico de las aporías del 
+            continuo y la monumental figura de <strong>Arquímedes de Siracusa</strong>, pionero indiscutible del precálculo integral.
+          </p>
+          <div class="callout-box">
+            «Conocer el trayecto histórico que va desde la agrimensura egipcia y la geometría deductiva griega hasta los límites del 
+            infinito aporta al futuro licenciado en matemáticas una mirada crítica, creativa y profundamente humanista de su disciplina.»
+          </div>
+        </div>
+
+        <div class="welcome-highlights">
+          <div class="highlight-item">
+            <div class="highlight-num">1</div>
+            <div>
+              <strong>Rigor Histórico y Matemático</strong>
+              <p style="font-size: 0.85rem; color: var(--text-muted);">Tratamiento formal de demostraciones, fuentes primarias y tratados clásicos (Sobre la esfera y el cilindro, El Método).</p>
+            </div>
+          </div>
+          <div class="highlight-item">
+            <div class="highlight-num">2</div>
+            <div>
+              <strong>Interactividad Heurística</strong>
+              <p style="font-size: 0.85rem; color: var(--text-muted);">Simulaciones en vivo del método de exhaución de polígonos de 96 lados y la ley física de la palanca.</p>
+            </div>
+          </div>
+          <div class="highlight-item">
+            <div class="highlight-num">3</div>
+            <div>
+              <strong>Articulación Transversal</strong>
+              <p style="font-size: 0.85rem; color: var(--text-muted);">Integración progresiva de las evidencias desarrolladas a lo largo de las distintas fases del curso.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 2: LÍNEA DE TIEMPO INTERACTIVA -->
+    <section class="section-block" id="linea-tiempo">
+      <div class="section-header">
+        <span class="section-subtitle">Evidencia Integrada &bull; Fases 1 y 2</span>
+        <h3>Línea de Tiempo del Pensamiento Matemático</h3>
+      </div>
+
+      <div class="timeline-container">
+        <!-- Egipto y Mesopotamia -->
+        <div class="timeline-item">
+          <div class="timeline-node"></div>
+          <div class="timeline-content">
+            <span class="timeline-badge">c. 2000 – 1650 a. C. &bull; Período Empírico-Operativo</span>
+            <h4>Antiguo Egipto y Mesopotamia: Agrimensura y Aritmética Aplicada</h4>
+            <p>
+              Desarrollo de las matemáticas motivado por imperativos materiales: delimitación de parcelas tras las inundaciones del 
+              Nilo (agrimensura con cuerda de nudos), cálculo de volúmenes de pirámides truncadas (Papiro de Moscú, problema 14) y 
+              administración tributaria. En Mesopotamia florece el sistema sexagesimal posicional y métodos algorítmicos para resolver 
+              ecuaciones cuadráticas mediante tablas de arcilla (Plimpton 322).
+            </p>
+          </div>
+        </div>
+
+        <!-- Grecia Clásica -->
+        <div class="timeline-item">
+          <div class="timeline-node"></div>
+          <div class="timeline-content">
+            <span class="timeline-badge">Siglo VI a. C. &bull; La Revolución Deductiva</span>
+            <h4>Tales de Mileto y la Escuela Pitagórica: Nacimiento de la Demostración</h4>
+            <p>
+              Transición de la receta práctica empírica a la demostración axiomática universal. Tales introduce la abstracción de 
+              segmentos proporcionales. Pitágoras y su hermandad vinculan el cosmos a relaciones aritmogeométricas de enteros, hasta 
+              el colapso epistemológico provocado por el descubrimiento de los inconmensurables en la diagonal del cuadrado (\(\sqrt{2}\)).
+            </p>
+          </div>
+        </div>
+
+        <!-- Zenón y el continuo -->
+        <div class="timeline-item">
+          <div class="timeline-node"></div>
+          <div class="timeline-content">
+            <span class="timeline-badge">Siglo V a. C. &bull; Crisis del Infinito</span>
+            <h4>Zenón de Elea y las Paradojas del Movimiento</h4>
+            <p>
+              Aporías de Aquiles y la tortuga, y la dicotomía: al problematizar la divisibilidad infinita del espacio y del tiempo, 
+              Zenón expone las tensiones entre lo discreto y lo continuo, anticipando en dos milenios la formulación del concepto de 
+              límite, convergencia y suma de series infinitas.
+            </p>
+          </div>
+        </div>
+
+        <!-- Arquímedes -->
+        <div class="timeline-item active-era">
+          <div class="timeline-node"></div>
+          <div class="timeline-content" style="border: 1px solid var(--accent-gold);">
+            <span class="timeline-badge" style="background-color: var(--accent-gold); color: var(--navy-dark);">c. 287 – 212 a. C. &bull; Cúspide Helenística</span>
+            <h4>Arquímedes de Siracusa: Síntesis Físico-Matemática y Precálculo</h4>
+            <p>
+              Perfeccionamiento supremo del método de exhaución. Cuadratura de la parábola mediante series geométricas convergentes, 
+              acotación estricta de \(\pi\) mediante polígonos regulares de 96 lados (\(3\frac{10}{71} < \pi < 3\frac{1}{7}\)), 
+              volúmenes de la esfera y el cilindro, y fundamentación formal de la estática e hidrostática.
+            </p>
+          </div>
+        </div>
+
+        <!-- Revolución Científica -->
+        <div class="timeline-item">
+          <div class="timeline-node"></div>
+          <div class="timeline-content">
+            <span class="timeline-badge">Siglos XVII – XVIII &bull; Revolución Científica Moderna</span>
+            <h4>Galileo Galilei e Isaac Newton: La Matematización del Universo</h4>
+            <p>
+              Galileo proclama que «el libro de la naturaleza está escrito en lenguaje matemático» y formaliza la cinemática. 
+              Newton y Leibniz sintetizan los métodos infinitesimales de Arquímedes, Kepler y Fermat creando el Cálculo Diferencial 
+              e Integral, consagrando las leyes dinámicas universales en los <em>Philosophiae Naturalis Principia Mathematica</em>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 3: PERSONAJES HISTÓRICOS (RESEÑA PRINCIPAL) -->
+    <section class="section-block" id="personajes">
+      <div class="section-header">
+        <span class="section-subtitle">Investigación y Análisis Histórico &bull; Aporte Individual</span>
+        <h3>Galería Académica de Grandes Pensadores</h3>
+      </div>
+
+      <!-- Tarjeta Principal de Arquímedes -->
+      <article class="character-hero-card">
+        <div class="character-header-flex">
+          <div class="character-title">
+            <h3>Arquímedes de Siracusa</h3>
+            <span class="lifespan">c. 287 a. C. – 212 a. C. &bull; Siracusa, Magna Grecia (Sicilia)</span>
+          </div>
+          <span class="character-tag">Aporte Desarrollado por: Jhon Sebastian Bautista</span>
+        </div>
+
+        <div class="character-body-grid">
+          <div class="character-details">
+            <h4>Contexto Histórico y Político</h4>
+            <p>
+              Arquímedes creció en la colonia griega de Siracusa, en un período caracterizado por el auge de las cortes helenísticas 
+              y la expansión militar romana. Hijo del astrónomo Fidias, se trasladó a Alejandría, el mayor centro científico de la época, 
+              donde consolidó su formación junto a discípulos de Euclides y cultivó amistad y correspondencia vitalicia con sabios como 
+              Conón de Samos y Eratóstenes. Al regresar a Siracusa, sirvió como asesor científico e ingeniero al rey Hierón II. Durante 
+              la Segunda Guerra Púnica, diseñó ingenios bélicos y catapultas que contuvieron por años el asedio naval de la República 
+              Romana bajo el mando del cónsul Marco Claudio Marcelo, hasta que la ciudad cayó en el 212 a. C., pereciendo a manos de un 
+              soldado legionario mientras trazaba diagramas geométricos en la arena (Boyer, 1986).
+            </p>
+
+            <h4>Principales Aportes Científicos y Matemáticos</h4>
+            <p>
+              <strong>1. Geometría Espacial y Volumetría:</strong> En su tratado <em>Sobre la esfera y el cilindro</em>, demostró que el 
+              volumen de toda esfera equivale a \(\frac{2}{3}\) del volumen del cilindro circular recto que la circunscribe, y que su 
+              superficie es exactamente cuatro veces el área de un círculo máximo (\(S = 4\pi r^2\)). Estaba tan orgulloso de esta 
+              proporción que solicitó que fuese esculpida como epitafio sobre su tumba (Heath, 1897).
+            </p>
+            <p>
+              <strong>2. Medición del Círculo y Aproximación de \(\pi\):</strong> Aplicó un procedimiento analítico riguroso inscribiendo 
+              y circunscribiendo polígonos regulares de \(6, 12, 24, 48\) y \(96\) lados. Mediante relaciones trigonométricas de bisección, 
+              estableció que la razón entre la circunferencia y su diámetro está acotada estrictamente:
+            </p>
+            <div style="text-align: center; margin: 1rem 0; font-size: 1.15rem; font-weight: 700; color: var(--primary-navy);">
+              \(3\frac{10}{71} < \pi < 3\frac{1}{7} \quad \Longleftrightarrow \quad 3.140845 < \pi < 3.142857\)
+            </div>
+            <p>
+              <strong>3. Cuadratura de la Parábola y Precálculo:</strong> Calculó el área de un segmento parabólico demostrando que 
+              equivale a \(\frac{4}{3}\) del área del triángulo inscrito de igual base y vértice, mediante la suma exhaustiva de una 
+              serie geométrica infinita:
+            </p>
+            <div style="text-align: center; margin: 0.85rem 0; font-size: 1.1rem; color: var(--primary-navy);">
+              \(A = A_0 \sum_{k=0}^{\infty} \left(\frac{1}{4}\right)^k = A_0 \left(1 + \frac{1}{4} + \frac{1}{16} + \dots\right) = \frac{4}{3} A_0\)
+            </div>
+            <p>
+              <strong>4. Física Matemática y Mecánica:</strong> En <em>Sobre el equilibrio de los planos</em> dedujo formalmente la ley de 
+              la palanca a partir de postulados de simetría (\(F_1 \cdot d_1 = F_2 \cdot d_2\)) y formuló en <em>Sobre los cuerpos flotantes</em> 
+              el principio hidrostático de empuje ascensional que lleva su nombre.
+            </p>
+            <p>
+              <strong>5. El Palimpsesto y el Tratado «El Método»:</strong> Descubierto por J. L. Heiberg en 1906 y analizado con rayos X en 
+              1998 (Netz & Noel, 2007), reveló que Arquímedes usaba un método heurístico donde «pesaba» secciones transversales infinitamente 
+              delgadas de figuras geométricas para intuir los resultados antes de someterlos al estricto canon deductivo de la exhaución.
+            </p>
+
+            <h4>Influencia y Trascendencia Científica</h4>
+            <p>
+              Las traducciones renacentistas de sus obras sirvieron de fundamento directo para Galileo Galilei, quien lo consideraba su 
+              «maestro sobrehumano». A su vez, los métodos infinitesimales de Arquímedes inspiraron a Cavalieri (método de los indivisibles), 
+              Kepler (geometría de los toneles) y Fermat, proveyendo los cimientos conceptuales para el advenimiento del cálculo con 
+              Newton y Leibniz (Boyer, 1986). Como tributo perdurable a su genialidad, el anverso de la <strong>Medalla Fields</strong>, 
+              máxima condecoración mundial de las matemáticas, lleva grabada la efigie de Arquímedes junto a su lema en latín: 
+              <em>«Transire suum pectus mundoque potiri»</em> (Superar los límites humanos y conquistar el universo).
+            </p>
+
+            <h4>Reflexión Docente y Pedagógica</h4>
+            <p>
+              Desde la perspectiva de la Licenciatura en Matemáticas, Arquímedes encarna la doble naturaleza de la construcción del 
+              saber matemático: la intuición heurística (descubrimiento de patrones y analogías físicas) y la demostración deductiva 
+              rigurosa. Mostrar este proceso a los estudiantes de secundaria y educación superior permite desmitificar la matemática como un 
+              cuerpo estático y punitivo, presentándola como una aventura humana dinámica de exploración y resolución de problemas.
+            </p>
+          </div>
+
+          <!-- Columna lateral: Tratados y obras -->
+          <div class="character-sidebar">
+            <div class="character-works-box">
+              <h5>Tratados Fundamentales</h5>
+              <ul class="works-list">
+                <li><strong>Sobre la esfera y el cilindro:</strong> Relación de volúmenes \(2/3\) y superficie \(4\pi r^2\).</li>
+                <li><strong>Medida del círculo:</strong> Cómputo de \(\pi\) con polígonos de 96 lados.</li>
+                <li><strong>La cuadratura de la parábola:</strong> Suma de serie geométrica infinita.</li>
+                <li><strong>El arenario:</strong> Aritmética de potencias para estimar partículas en el cosmos.</li>
+                <li><strong>Sobre los cuerpos flotantes:</strong> Principio de hidrostática y flotabilidad.</li>
+                <li><strong>Sobre el equilibrio de los planos:</strong> Ley de la palanca y centros de gravedad.</li>
+                <li><strong>Sobre las espirales:</strong> Estudio cinemático de la espiral de Arquímedes.</li>
+                <li><strong>El Método:</strong> Anticipación heurística del cálculo integral.</li>
+              </ul>
+            </div>
+
+            <div class="character-works-box" style="margin-top: 1.5rem; border-top: 3px solid var(--primary-navy);">
+              <h5>Ficha del Pensador</h5>
+              <p style="font-size: 0.85rem; margin-bottom: 0.4rem;"><strong>Época:</strong> Período Helenístico (Siglo III a. C.)</p>
+              <p style="font-size: 0.85rem; margin-bottom: 0.4rem;"><strong>Áreas:</strong> Geometría, Precálculo, Mecánica, Hidrostática, Astronomía.</p>
+              <p style="font-size: 0.85rem; margin-bottom: 0.4rem;"><strong>Paradigma:</strong> Deducción axiomática unida a experimentación física.</p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Tarjetas Complementarias de los demás personajes -->
+      <div class="peer-grid">
+        <div class="peer-card">
+          <h4>Galileo Galilei</h4>
+          <span class="era">1564 – 1642 &bull; Pisa / Florencia, Italia</span>
+          <p>
+            Padre del método científico moderno y de la física matemática. Reemplazó la física cualitativa aristotélica por la 
+            cuantificación cinemática rigurosa del movimiento uniformemente acelerado (\(s = \frac{1}{2}gt^2\)) y formuló el principio de 
+            inercia, adoptando la geometría de Arquímedes como el lenguaje maestro de la naturaleza.
+          </p>
+        </div>
+
+        <div class="peer-card">
+          <h4>Isaac Newton</h4>
+          <span class="era">1643 – 1727 &bull; Woolsthorpe / Cambridge, Inglaterra</span>
+          <p>
+            Consumador de la Revolución Científica. Desarrolló el método de fluxiones (cálculo diferencial e integral), demostró el 
+            teorema del binomio generalizado para exponentes racionales y formuló las tres leyes fundamentales de la dinámica junto 
+            a la ley de gravitación universal en los <em>Principia</em> (1687).
+          </p>
+        </div>
+
+        <div class="peer-card">
+          <h4>Gottfried Wilhelm Leibniz</h4>
+          <span class="era">1646 – 1716 &bull; Leipzig / Hannover, Sacro Imperio</span>
+          <p>
+            Genio universal y codescubridor independiente del cálculo. Diseñó el sistema de notación operativa (\(dx\), \(\int\)) que 
+            utilizamos hoy en día, fundamentando las reglas operativas de derivación e integración y concibiendo los rudimentos de la 
+            lógica simbólica y el análisis combinatorio.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 4: ENTREVISTA EN VIDEO (FASE 2) -->
+    <section class="section-block" id="entrevista">
+      <div class="section-header">
+        <span class="section-subtitle">Evidencia Audiovisual &bull; Fase 2</span>
+        <h3>Entrevista Académica en Video Subtitulado</h3>
+      </div>
+
+      <div class="video-card">
+        <div class="video-player-container">
+          <div class="video-placeholder">
+            <div class="play-icon">&#9658;</div>
+            <h4 style="color: #FFFFFF; font-size: 1.25rem; margin-bottom: 0.5rem;">Panel de Expertos: Evolución del Pensamiento Matemático</h4>
+            <p style="font-size: 0.85rem; color: #CBD5E1; margin-bottom: 1.25rem;">
+              Grabación en formato de entrevista especializada con subtitulado formal sincronizado (Duración: 05:00 minutos exactos).
+            </p>
+            <a href="https://youtu.be" target="_blank" class="btn btn-primary" style="font-size: 0.85rem;">
+              Reproducir Video en YouTube &rarr;
+            </a>
+          </div>
+        </div>
+
+        <div class="video-info">
+          <h4>Ficha Técnica y Guion de Producción</h4>
+          <p style="font-size: 0.9rem; color: var(--text-main);">
+            El recurso audiovisual fue concebido bajo el formato de diálogo socrático entre un moderador académico y un especialista 
+            en epistemología de las matemáticas, analizando el tránsito histórico entre las técnicas operativas empíricas y la deducción lógica.
+          </p>
+
+          <ul class="video-specs">
+            <li><strong>Duración exacta:</strong> 05:00 minutos cronometrados según la rúbrica.</li>
+            <li><strong>Bloque 1 (00:00–00:35):</strong> Apertura y contextualización epistémica.</li>
+            <li><strong>Bloque 2 (00:35–01:25):</strong> Antiguo Egipto: agrimensura, Seked y volumetría.</li>
+            <li><strong>Bloque 3 (01:25–02:25):</strong> Mesopotamia: sistema sexagesimal y tablas cuadráticas.</li>
+            <li><strong>Bloque 4 (02:25–03:35):</strong> Filosofía griega, Tales y aporías de Zenón.</li>
+            <li><strong>Bloque 5 (03:35–05:00):</strong> Arquímedes, síntesis deductiva y conclusiones formativas.</li>
+            <li><strong>Accesibilidad:</strong> Subtitulado completo sincronizado en español conforme a lineamientos UNAD.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 5: LABORATORIO INTERACTIVO (CANVAS JS) -->
+    <section class="section-block" id="laboratorio">
+      <div class="section-header">
+        <span class="section-subtitle">Recurso Digital Interactivo &bull; Simulación en Vivo</span>
+        <h3>Laboratorio de Matemáticas Históricas</h3>
+      </div>
+
+      <div class="lab-container">
+        <!-- Pestañas -->
+        <div class="lab-tabs">
+          <button class="lab-tab-btn active" data-tab="tab-exhaucion">
+            1. Exhaución de Arquímedes (Aproximación de π)
+          </button>
+          <button class="lab-tab-btn" data-tab="tab-palanca">
+            2. Balanza y Ley de la Palanca (F₁·d₁ = F₂·d₂)
+          </button>
+        </div>
+
+        <!-- Vista 1: Exhaución de Pi -->
+        <div class="lab-view active" id="tab-exhaucion">
+          <div class="canvas-wrapper">
+            <canvas id="circleCanvas" width="380" height="380"></canvas>
+            <div style="font-size: 0.75rem; color: #94A3B8; margin-top: 0.5rem;">
+              <span style="color:#38BDF8;">■ Polígono Inscrito</span> | 
+              <span style="color:#FFFFFF;">○ Círculo Teórico</span> | 
+              <span style="color:#E5C048;">■ Polígono Circunscrito</span>
+            </div>
+          </div>
+
+          <div class="lab-controls">
+            <div class="control-group">
+              <label>Selecciona el número de lados del polígono regular (\(n\)):</label>
+              <div class="n-buttons">
+                <button class="btn-n" data-n="6">6</button>
+                <button class="btn-n" data-n="12">12</button>
+                <button class="btn-n" data-n="24">24</button>
+                <button class="btn-n" data-n="48">48</button>
+                <button class="btn-n active" data-n="96">96 (Tratado)</button>
+                <button class="btn-n" data-n="192">192</button>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label for="nSlider">Deslizador continuo de polígonos:</label>
+              <input type="range" id="nSlider" min="6" max="192" step="6" value="96" style="width: 100%;">
+            </div>
+
+            <div class="metrics-box">
+              <div class="metric-row">
+                <span>Número de lados (\(n\)):</span>
+                <strong id="metricN">96 lados</strong>
+              </div>
+              <div class="metric-row">
+                <span>Cota Inferior (Inscrito / 2R):</span>
+                <strong id="metricLower" style="color: #0284C7;">3.140845</strong>
+              </div>
+              <div class="metric-row">
+                <span>Cota Superior (Circunscrito / 2R):</span>
+                <strong id="metricUpper" style="color: #B45309;">3.142857</strong>
+              </div>
+              <div class="metric-row">
+                <span>Valor Real de \(\pi\):</span>
+                <strong>3.14159265...</strong>
+              </div>
+              <div class="metric-row">
+                <span>Margen de error estimado:</span>
+                <strong id="metricError" style="color: #16A34A;">0.016 %</strong>
+              </div>
+
+              <div class="archimedes-bounds" id="archimedesInterval">
+                <!-- Se actualiza por JS -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Vista 2: Ley de la Palanca -->
+        <div class="lab-view" id="tab-palanca">
+          <div class="canvas-wrapper">
+            <canvas id="leverCanvas" width="380" height="240"></canvas>
+            <div style="font-size: 0.75rem; color: #94A3B8; margin-top: 0.5rem;">
+              «Dadme un punto de apoyo y moveré el mundo» — Arquímedes
+            </div>
+          </div>
+
+          <div class="lab-controls">
+            <div class="control-group">
+              <label>Fuerza 1 / Masa izquierda (\(F_1\)): <span id="valF1">50 kg</span></label>
+              <input type="range" id="leverF1" min="10" max="150" value="50" style="width: 100%;">
+            </div>
+
+            <div class="control-group">
+              <label>Brazo de palanca 1 (\(d_1\)): <span id="valD1">4.0 m</span></label>
+              <input type="range" id="leverD1" min="1" max="5" step="0.2" value="4.0" style="width: 100%;">
+            </div>
+
+            <div class="control-group">
+              <label>Fuerza 2 / Masa derecha (\(F_2\)): <span id="valF2">100 kg</span></label>
+              <input type="range" id="leverF2" min="20" max="200" value="100" style="width: 100%;">
+            </div>
+
+            <div class="metrics-box">
+              <div class="metric-row">
+                <span>Brazo de equilibrio calculado (\(d_2\)):</span>
+                <strong id="valD2" style="color: #B45309;">2.00 m</strong>
+              </div>
+              <div class="metric-row">
+                <span>Momento de fuerza izquierdo (\(M_1\)):</span>
+                <strong id="valTorque1">200.0 kg·m</strong>
+              </div>
+              <div class="metric-row">
+                <span>Momento de fuerza derecho (\(M_2\)):</span>
+                <strong id="valTorque2">200.0 kg·m</strong>
+              </div>
+              <div style="font-size: 0.82rem; margin-top: 0.6rem; color: #475569; text-align: center;">
+                Condición de equilibrio estático arquimediano: \(\sum \tau = F_1 d_1 - F_2 d_2 = 0\)
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECCIÓN 6: EVIDENCIAS DE CONSTRUCCIÓN -->
+    <section class="section-block" id="evidencias">
+      <div class="section-header">
+        <span class="section-subtitle">Proceso de Construcción Colaborativo</span>
+        <h3>Evidencias y Prototipos del Portafolio</h3>
+      </div>
+
+      <div class="gallery-grid">
+        <div class="gallery-card">
+          <img src="assets/boceto_inicio.png" alt="Boceto de inicio" class="gallery-thumb" onerror="this.src='https://via.placeholder.com/400x250/1B2F55/FFFFFF?text=Boceto+Figura+1'">
+          <div class="gallery-caption">
+            <h5>Figura 1. Boceto Inicial de Estructura</h5>
+            <p>Diseño preliminar de la página de inicio, paleta de colores y arquitectura de navegación.</p>
+          </div>
+        </div>
+
+        <div class="gallery-card">
+          <img src="assets/evidencia_foro.png" alt="Participación en el foro" class="gallery-thumb" onerror="this.src='https://via.placeholder.com/400x250/1B2F55/FFFFFF?text=Evidencia+Foro+UNAD'">
+          <div class="gallery-caption">
+            <h5>Figura 2. Participación en el Foro Colaborativo</h5>
+            <p>Socialización del personaje Arquímedes, propuesta de plataforma y distribución temática.</p>
+          </div>
+        </div>
+
+        <div class="gallery-card">
+          <img src="assets/prototipo_inicio.png" alt="Prototipo de inicio" class="gallery-thumb" onerror="this.src='https://via.placeholder.com/400x250/1B2F55/FFFFFF?text=Prototipo+Inicio'">
+          <div class="gallery-caption">
+            <h5>Figura 3. Prototipo Web de Inicio</h5>
+            <p>Maquetación funcional del sitio web con menú superior y tarjetas de acceso directo.</p>
+          </div>
+        </div>
+
+        <div class="gallery-card">
+          <img src="assets/prototipo_arquimedes.png" alt="Prototipo de reseña" class="gallery-thumb" onerror="this.src='https://via.placeholder.com/400x250/1B2F55/FFFFFF?text=Prototipo+Arquimedes'">
+          <div class="gallery-caption">
+            <h5>Figura 4. Prototipo de Reseña de Arquímedes</h5>
+            <p>Estructuración formal del contexto histórico, aportes científicos y tratados geométricos.</p>
+          </div>
+        </div>
+
+        <div class="gallery-card">
+          <img src="assets/prototipo_recurso_pi.png" alt="Prototipo interactivo de Pi" class="gallery-thumb" onerror="this.src='https://via.placeholder.com/400x250/1B2F55/FFFFFF?text=Prototipo+Recurso+Pi'">
+          <div class="gallery-caption">
+            <h5>Figura 5. Prototipo del Laboratorio de Pi</h5>
+            <p>Implementación del motor gráfico de aproximación poligonal según el tratado de Arquímedes.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 7: CONCLUSIONES -->
+    <section class="section-block" id="conclusiones">
+      <div class="section-header">
+        <span class="section-subtitle">Síntesis Formativa</span>
+        <h3>Conclusiones Académicas</h3>
+      </div>
+
+      <div class="conclusions-grid">
+        <div class="conclusion-card">
+          <div class="conc-num">01</div>
+          <h4>Continuidad Histórica del Cálculo</h4>
+          <p>
+            El análisis de las obras de Arquímedes demuestra que el cálculo infinitesimal moderno no surgió de forma aislada en el 
+            siglo XVII, sino que hunde sus raíces lógicas en la geometría helenística. El método de exhaución y la suma de series 
+            geométricas infinitas anticiparon con asombroso rigor formal las nociones de límite e integral.
+          </p>
+        </div>
+
+        <div class="conclusion-card">
+          <div class="conc-num">02</div>
+          <h4>Integración Tecnológica en la Divulgación</h4>
+          <p>
+            El diseño y desarrollo de un portafolio web interactivo permite trascender el documento pasivo tradicional. Al combinar 
+            recursos audiovisuales subtitulados y simulaciones matemáticas en tiempo real (HTML5/Canvas), se crea una experiencia 
+            de aprendizaje activa y accesible que facilita la apropiación de conceptos complejos.
+          </p>
+        </div>
+
+        <div class="conclusion-card">
+          <div class="conc-num">03</div>
+          <h4>Articulación Progresiva del Saber</h4>
+          <p>
+            Estructurar tempranamente la arquitectura y el diseño del portafolio asegura la coherencia curricular entre las distintas 
+            fases del curso. Esto permite albergar ordenadamente desde las matemáticas empíricas antiguas hasta las revoluciones de 
+            la física matemática renacentista y moderna.
+          </p>
+        </div>
+
+        <div class="conclusion-card">
+          <div class="conc-num">04</div>
+          <h4>Impacto en la Formación del Licenciado</h4>
+          <p>
+            Para el futuro docente de matemáticas, reconstruir la génesis epistemológica de los conceptos (cómo y por qué surgieron) 
+            constituye una poderosa herramienta pedagógica para el aula escolar, humanizando la ciencia y desmitificando el formalismo 
+            abstracto descontextualizado.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 8: REFERENCIAS BIBLIOGRÁFICAS (APA 7) -->
+    <section class="section-block" id="referencias">
+      <div class="section-header">
+        <span class="section-subtitle">Fuentes Académicas Confiables</span>
+        <h3>Referencias Bibliográficas (Normas APA 7.ª Edición)</h3>
+      </div>
+
+      <div class="references-card">
+        <div class="ref-item">
+          Aranda, D. F. (2022). <em>Los Números y sus Civilizaciones</em> [Objeto Virtual de Aprendizaje OVA]. Repositorio Institucional UNAD. 
+          <a href="https://repository.unad.edu.co/handle/10596/49460" target="_blank">https://repository.unad.edu.co/handle/10596/49460</a>
+        </div>
+        <div class="ref-item">
+          Bisagra, L. (2020). Reseña crítica de "Breve historia de las Matemáticas", de Cerrutti, Mónica. <em>La Bisagra</em>. 
+          <a href="https://elibro-net.bibliotecavirtual.unad.edu.co/es/ereader/unad/128752" target="_blank">https://elibro-net.bibliotecavirtual.unad.edu.co/es/ereader/unad/128752</a>
+        </div>
+        <div class="ref-item">
+          Boyer, C. B. (1986). <em>Historia de la matemática</em> (Trad. M. Martínez Pérez). Alianza Editorial.
+        </div>
+        <div class="ref-item">
+          Diego, A. L. (2020). <em>Historia de las Matemáticas</em> [Objeto Virtual de Aprendizaje OVA]. Repositorio Institucional UNAD. 
+          <a href="https://repository.unad.edu.co/handle/10596/33747" target="_blank">https://repository.unad.edu.co/handle/10596/33747</a>
+        </div>
+        <div class="ref-item">
+          Heath, T. L. (Ed.). (1897). <em>The works of Archimedes</em>. Cambridge University Press. 
+          <a href="https://archive.org/details/worksofarchimede00arch" target="_blank">https://archive.org/details/worksofarchimede00arch</a>
+        </div>
+        <div class="ref-item">
+          Netz, R., & Noel, W. (2007). <em>El código de Arquímedes</em>. Editorial Temas de Hoy.
+        </div>
+        <div class="ref-item">
+          Poveda Ramos, G. (2012). <em>Historia de las matemáticas en Colombia</em>. Ediciones Unaula. 
+          <a href="https://elibro-net.bibliotecavirtual.unad.edu.co/es/ereader/unad/164544" target="_blank">https://elibro-net.bibliotecavirtual.unad.edu.co/es/ereader/unad/164544</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer Institucional -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-col">
+        <h5>Legado Matemático: Portafolio Digital</h5>
+        <p>
+          Producto integrador desarrollado para el curso <strong>Historia de las Matemáticas (551104)</strong> de la 
+          Universidad Nacional Abierta y a Distancia (UNAD). Diseñado con propósitos exclusivamente educativos, de 
+          investigación historiográfica y divulgación científica abierta.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h5>Secciones del Sitio</h5>
+        <ul class="footer-links">
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#linea-tiempo">Línea de Tiempo</a></li>
+          <li><a href="#personajes">Grandes Pensadores</a></li>
+          <li><a href="#entrevista">Entrevista Subtitulada</a></li>
+          <li><a href="#laboratorio">Laboratorio Interactivo</a></li>
+          <li><a href="#conclusiones">Conclusiones</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Datos del Autor</h5>
+        <p><strong>Estudiante:</strong> Jhon Sebastian Bautista Hernandez</p>
+        <p><strong>Programa:</strong> Licenciatura en Matemáticas</p>
+        <p><strong>Escuela:</strong> ECEDU &bull; CEAD Soacha</p>
+        <p><strong>Año:</strong> 2026</p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      &copy; 2026 Legado Matemático &bull; Licenciatura en Matemáticas &bull; UNAD. Todos los derechos reservados conforme a normativas académicas institucionales.
+    </div>
+  </footer>
+
+  <!-- Scripts propios -->
+  <script src="script.js"></script>
+</body>
+</html>
