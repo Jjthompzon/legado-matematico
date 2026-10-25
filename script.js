@@ -1,5 +1,5 @@
 /* ==========================================================================
-   LEGADO MATEMÁTICO - INTERACTIVIDAD Y MOTOR MATEMÁTICO
+   LEGADO MATEMÁTICO - INTERACTIVIDAD, ANIMACIÓN Y MOTOR MATEMÁTICO
    Universidad Nacional Abierta y a Distancia (UNAD)
    Curso: Historia de las Matemáticas (551104)
    ========================================================================== */
@@ -91,152 +91,99 @@ function initLabTabs() {
       btn.classList.add("active");
       const activeView = document.getElementById(target);
       if (activeView) activeView.classList.add("active");
-
-      if (target === "tab-exhaucion") {
-        drawArchimedesSimulation();
-      } else if (target === "tab-palanca") {
-        drawLeverSimulation();
-      }
     });
   });
 }
 
 /* ==========================================================================
-   3. SIMULACIÓN: MÉTODO DE EXHAUCIÓN DE ARQUÍMEDES (APROXIMACIÓN DE PI)
+   3. SIMULACIÓN Y ANIMACIÓN EN VIVO: MÉTODO DE EXHAUCIÓN DE ARQUÍMEDES (PI)
    ========================================================================== */
 let currentSides = 96;
+let rotationAngle = 0;
+let isAutoPlaying = false;
+let autoPlayInterval = null;
+let zoomActive = false;
+const allowedSteps = [6, 12, 24, 48, 96, 192];
+let stepIndex = 4; // Comienza en 96 (índice 4)
 
 function initArchimedesLab() {
   const nButtons = document.querySelectorAll(".btn-n");
   const nSlider = document.getElementById("nSlider");
+  const playBtn = document.getElementById("btnPlayExhaucion");
+  const zoomBtn = document.getElementById("btnZoomToggle");
 
   nButtons.forEach(btn => {
     btn.addEventListener("click", () => {
-      nButtons.forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
+      if (isAutoPlaying) toggleAutoPlay();
       currentSides = parseInt(btn.getAttribute("data-n"), 10);
-      if (nSlider) nSlider.value = currentSides;
-      drawArchimedesSimulation();
+      stepIndex = allowedSteps.indexOf(currentSides);
+      updateControlsUI();
     });
   });
 
   if (nSlider) {
     nSlider.addEventListener("input", (e) => {
+      if (isAutoPlaying) toggleAutoPlay();
       currentSides = parseInt(e.target.value, 10);
-      nButtons.forEach(b => {
-        b.classList.toggle("active", parseInt(b.getAttribute("data-n"), 10) === currentSides);
-      });
-      drawArchimedesSimulation();
+      updateControlsUI();
     });
   }
 
-  window.addEventListener("resize", drawArchimedesSimulation);
-  drawArchimedesSimulation();
+  if (playBtn) {
+    playBtn.addEventListener("click", toggleAutoPlay);
+  }
+
+  if (zoomBtn) {
+    zoomBtn.addEventListener("click", () => {
+      zoomActive = !zoomActive;
+      zoomBtn.classList.toggle("btn-primary", zoomActive);
+      zoomBtn.classList.toggle("btn-secondary", !zoomActive);
+      zoomBtn.innerHTML = zoomActive ? "🔍 Lupa Microscópica: ACTIVA" : "🔍 Activar Lupa / Zoom";
+    });
+  }
+
+  updateControlsUI();
+  requestAnimationFrame(archimedesAnimationLoop);
 }
 
-function drawArchimedesSimulation() {
-  const canvas = document.getElementById("circleCanvas");
-  if (!canvas) return;
+function toggleAutoPlay() {
+  const playBtn = document.getElementById("btnPlayExhaucion");
+  isAutoPlaying = !isAutoPlaying;
 
-  const dpr = window.devicePixelRatio || 1;
-  const cssSize = 380;
-  canvas.width = cssSize * dpr;
-  canvas.height = cssSize * dpr;
-  canvas.style.width = cssSize + "px";
-  canvas.style.height = cssSize + "px";
+  if (isAutoPlaying) {
+    if (playBtn) playBtn.innerHTML = "⏸ Pausar Animación";
+    autoPlayInterval = setInterval(() => {
+      stepIndex = (stepIndex + 1) % allowedSteps.length;
+      currentSides = allowedSteps[stepIndex];
+      updateControlsUI();
+    }, 1800);
+  } else {
+    if (playBtn) playBtn.innerHTML = "▶ Iniciar Animación Automática (Paso a Paso)";
+    clearInterval(autoPlayInterval);
+    autoPlayInterval = null;
+  }
+}
 
-  const ctx = canvas.getContext("2d");
-  ctx.resetTransform();
-  ctx.scale(dpr, dpr);
+function updateControlsUI() {
+  const nButtons = document.querySelectorAll(".btn-n");
+  const nSlider = document.getElementById("nSlider");
 
-  const cx = cssSize / 2;
-  const cy = cssSize / 2;
-  const R = cssSize * 0.38;
+  nButtons.forEach(b => {
+    b.classList.toggle("active", parseInt(b.getAttribute("data-n"), 10) === currentSides);
+  });
+  if (nSlider) nSlider.value = currentSides;
+
+  updateArchimedesMetrics();
+}
+
+function updateArchimedesMetrics() {
   const n = currentSides;
-
-  ctx.clearRect(0, 0, cssSize, cssSize);
-
-  // 1. Fondo técnico
-  ctx.fillStyle = "#0B132B";
-  ctx.fillRect(0, 0, cssSize, cssSize);
-
-  // Cuadrícula sutil
-  ctx.strokeStyle = "rgba(255, 255, 255, 0.05)";
-  ctx.lineWidth = 1;
-  const step = 20;
-  for (let x = 0; x < cssSize; x += step) {
-    ctx.beginPath();
-    ctx.moveTo(x, 0); ctx.lineTo(x, cssSize); ctx.stroke();
-  }
-  for (let y = 0; y < cssSize; y += step) {
-    ctx.beginPath();
-    ctx.moveTo(0, y); ctx.lineTo(cssSize, y); ctx.stroke();
-  }
-
-  // Ejes ortogonales
-  ctx.strokeStyle = "rgba(255, 255, 255, 0.15)";
-  ctx.beginPath();
-  ctx.moveTo(cx, 10); ctx.lineTo(cx, cssSize - 10);
-  ctx.moveTo(10, cy); ctx.lineTo(cssSize - 10, cy);
-  ctx.stroke();
-
-  // 2. Polígono Circunscrito (Dorado)
-  const angleStep = (2 * Math.PI) / n;
-  const halfAngle = angleStep / 2;
-  const R_circ = R / Math.cos(halfAngle);
-
-  ctx.beginPath();
-  for (let i = 0; i < n; i++) {
-    const angle = i * angleStep;
-    const x = cx + R_circ * Math.cos(angle);
-    const y = cy + R_circ * Math.sin(angle);
-    if (i === 0) ctx.moveTo(x, y);
-    else ctx.lineTo(x, y);
-  }
-  ctx.closePath();
-  ctx.fillStyle = "rgba(201, 162, 39, 0.12)";
-  ctx.fill();
-  ctx.strokeStyle = "#E5C048";
-  ctx.lineWidth = 2;
-  ctx.stroke();
-
-  // 3. Circunferencia Teórica
-  ctx.beginPath();
-  ctx.arc(cx, cy, R, 0, 2 * Math.PI);
-  ctx.strokeStyle = "rgba(255, 255, 255, 0.85)";
-  ctx.lineWidth = 2;
-  ctx.stroke();
-
-  // 4. Polígono Inscrito (Azul Cian)
-  ctx.beginPath();
-  for (let i = 0; i < n; i++) {
-    const angle = i * angleStep - halfAngle;
-    const x = cx + R * Math.cos(angle);
-    const y = cy + R * Math.sin(angle);
-    if (i === 0) ctx.moveTo(x, y);
-    else ctx.lineTo(x, y);
-  }
-  ctx.closePath();
-  ctx.fillStyle = "rgba(56, 189, 248, 0.18)";
-  ctx.fill();
-  ctx.strokeStyle = "#38BDF8";
-  ctx.lineWidth = 2;
-  ctx.stroke();
-
-  // Centro
-  ctx.beginPath();
-  ctx.arc(cx, cy, 3, 0, 2 * Math.PI);
-  ctx.fillStyle = "#FFFFFF";
-  ctx.fill();
-
-  // 5. Cálculos Matemáticos Reales
   const lowerBound = n * Math.sin(Math.PI / n);
   const upperBound = n * Math.tan(Math.PI / n);
   const realPi = Math.PI;
   const avgEstimate = (lowerBound + upperBound) / 2;
   const errorPct = Math.abs((avgEstimate - realPi) / realPi) * 100;
 
-  // Actualizar DOM
   const valN = document.getElementById("metricN");
   const valLower = document.getElementById("metricLower");
   const valUpper = document.getElementById("metricUpper");
@@ -267,13 +214,188 @@ function drawArchimedesSimulation() {
   }
 }
 
+// Bucle de animación continua con requestAnimationFrame
+function archimedesAnimationLoop() {
+  rotationAngle += 0.003; // Rotación orbital suave en vivo
+  renderArchimedesCanvas();
+  requestAnimationFrame(archimedesAnimationLoop);
+}
+
+function renderArchimedesCanvas() {
+  const canvas = document.getElementById("circleCanvas");
+  if (!canvas) return;
+
+  const dpr = window.devicePixelRatio || 1;
+  const cssSize = 380;
+  canvas.width = cssSize * dpr;
+  canvas.height = cssSize * dpr;
+  canvas.style.width = cssSize + "px";
+  canvas.style.height = cssSize + "px";
+
+  const ctx = canvas.getContext("2d");
+  ctx.resetTransform();
+  ctx.scale(dpr, dpr);
+
+  const cx = cssSize / 2;
+  const cy = cssSize / 2;
+  const R = cssSize * 0.38;
+  const n = currentSides;
+
+  ctx.clearRect(0, 0, cssSize, cssSize);
+
+  // 1. Fondo técnico con cuadrícula animada
+  ctx.fillStyle = "#0B132B";
+  ctx.fillRect(0, 0, cssSize, cssSize);
+
+  ctx.strokeStyle = "rgba(255, 255, 255, 0.04)";
+  ctx.lineWidth = 1;
+  const step = 20;
+  for (let x = 0; x < cssSize; x += step) {
+    ctx.beginPath();
+    ctx.moveTo(x, 0); ctx.lineTo(x, cssSize); ctx.stroke();
+  }
+  for (let y = 0; y < cssSize; y += step) {
+    ctx.beginPath();
+    ctx.moveTo(0, y); ctx.lineTo(cssSize, y); ctx.stroke();
+  }
+
+  // Ejes ortogonales
+  ctx.strokeStyle = "rgba(255, 255, 255, 0.12)";
+  ctx.beginPath();
+  ctx.moveTo(cx, 15); ctx.lineTo(cx, cssSize - 15);
+  ctx.moveTo(15, cy); ctx.lineTo(cssSize - 15, cy);
+  ctx.stroke();
+
+  // 2. Polígono Circunscrito (Dorado exterior) con rotación continua
+  const angleStep = (2 * Math.PI) / n;
+  const halfAngle = angleStep / 2;
+  const R_circ = R / Math.cos(halfAngle);
+
+  ctx.beginPath();
+  for (let i = 0; i < n; i++) {
+    const angle = i * angleStep + rotationAngle;
+    const x = cx + R_circ * Math.cos(angle);
+    const y = cy + R_circ * Math.sin(angle);
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  }
+  ctx.closePath();
+  ctx.fillStyle = "rgba(201, 162, 39, 0.12)";
+  ctx.fill();
+  ctx.strokeStyle = "#E5C048";
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  // 3. Circunferencia Teórica (Blanco / Celeste)
+  ctx.beginPath();
+  ctx.arc(cx, cy, R, 0, 2 * Math.PI);
+  ctx.strokeStyle = "rgba(255, 255, 255, 0.85)";
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  // 4. Polígono Inscrito (Azul Cian interior)
+  ctx.beginPath();
+  for (let i = 0; i < n; i++) {
+    const angle = i * angleStep - halfAngle + rotationAngle;
+    const x = cx + R * Math.cos(angle);
+    const y = cy + R * Math.sin(angle);
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  }
+  ctx.closePath();
+  ctx.fillStyle = "rgba(56, 189, 248, 0.18)";
+  ctx.fill();
+  ctx.strokeStyle = "#38BDF8";
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  // Centro
+  ctx.beginPath();
+  ctx.arc(cx, cy, 3, 0, 2 * Math.PI);
+  ctx.fillStyle = "#FFFFFF";
+  ctx.fill();
+
+  // 5. Inset Lupa Microscópica de Aumento (Efecto de Exhaución)
+  if (zoomActive) {
+    const zoomSize = 110;
+    const zx = cssSize - zoomSize - 12;
+    const zy = 12;
+
+    // Caja de aumento
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(zx, zy, zoomSize, zoomSize);
+    ctx.clip();
+
+    ctx.fillStyle = "#030712";
+    ctx.fillRect(zx, zy, zoomSize, zoomSize);
+
+    // Dibujar ampliación 5x en la zona superior de contacto
+    const zoomScale = 5;
+    ctx.translate(zx + zoomSize / 2, zy + zoomSize / 2);
+    ctx.scale(zoomScale, zoomScale);
+    ctx.translate(-cx, -(cy - R));
+
+    // Circunferencia ampliada
+    ctx.beginPath();
+    ctx.arc(cx, cy, R, 0, 2 * Math.PI);
+    ctx.strokeStyle = "#FFFFFF";
+    ctx.lineWidth = 1 / zoomScale;
+    ctx.stroke();
+
+    // Polígono circunscrito ampliado
+    ctx.beginPath();
+    for (let i = 0; i < n; i++) {
+      const angle = i * angleStep + rotationAngle;
+      const x = cx + R_circ * Math.cos(angle);
+      const y = cy + R_circ * Math.sin(angle);
+      if (i === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    }
+    ctx.closePath();
+    ctx.strokeStyle = "#E5C048";
+    ctx.lineWidth = 1 / zoomScale;
+    ctx.stroke();
+
+    // Polígono inscrito ampliado
+    ctx.beginPath();
+    for (let i = 0; i < n; i++) {
+      const angle = i * angleStep - halfAngle + rotationAngle;
+      const x = cx + R * Math.cos(angle);
+      const y = cy + R * Math.sin(angle);
+      if (i === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    }
+    ctx.closePath();
+    ctx.strokeStyle = "#38BDF8";
+    ctx.lineWidth = 1 / zoomScale;
+    ctx.stroke();
+
+    ctx.restore();
+
+    // Marco de la lupa
+    ctx.strokeStyle = "rgba(201, 162, 39, 0.8)";
+    ctx.lineWidth = 2;
+    ctx.strokeRect(zx, zy, zoomSize, zoomSize);
+
+    ctx.fillStyle = "#F8FAFC";
+    ctx.font = "9px 'Inter', sans-serif";
+    ctx.fillText("LUPA 5X: Brecha (Exhaución)", zx + 6, zy + zoomSize - 6);
+  }
+}
+
 /* ==========================================================================
-   4. SIMULACIÓN: LEY DE LA PALANCA (F1 * d1 = F2 * d2)
+   4. SIMULACIÓN Y ANIMACIÓN EN VIVO: LEY DE LA PALANCA CON OSCILACIÓN FÍSICA
    ========================================================================== */
 let leverF1 = 50;
 let leverD1 = 4;
 let leverF2 = 100;
 let leverD2 = 2;
+
+// Física oscilatoria para animación de balanza
+let leverAngle = 0;
+let leverAngularVel = 0;
+let leverTargetAngle = 0;
 
 function initLeverLab() {
   const f1Input = document.getElementById("leverF1");
@@ -283,26 +405,34 @@ function initLeverLab() {
   if (f1Input) {
     f1Input.addEventListener("input", (e) => {
       leverF1 = parseFloat(e.target.value);
-      updateLever();
+      applyLeverImpulse(0.04);
+      updateLeverData();
     });
   }
   if (d1Input) {
     d1Input.addEventListener("input", (e) => {
       leverD1 = parseFloat(e.target.value);
-      updateLever();
+      applyLeverImpulse(0.05);
+      updateLeverData();
     });
   }
   if (f2Input) {
     f2Input.addEventListener("input", (e) => {
       leverF2 = parseFloat(e.target.value);
-      updateLever();
+      applyLeverImpulse(-0.04);
+      updateLeverData();
     });
   }
 
-  updateLever();
+  updateLeverData();
+  requestAnimationFrame(leverAnimationLoop);
 }
 
-function updateLever() {
+function applyLeverImpulse(amount) {
+  leverAngularVel += amount;
+}
+
+function updateLeverData() {
   leverD2 = (leverF1 * leverD1) / leverF2;
 
   const f1Val = document.getElementById("valF1");
@@ -318,11 +448,23 @@ function updateLever() {
   if (d2Val) d2Val.textContent = `${leverD2.toFixed(2)} m`;
   if (torque1Val) torque1Val.textContent = `${(leverF1 * leverD1).toFixed(1)} kg·m`;
   if (torque2Val) torque2Val.textContent = `${(leverF2 * leverD2).toFixed(1)} kg·m`;
-
-  drawLeverSimulation();
 }
 
-function drawLeverSimulation() {
+// Bucle de animación física de oscilación amortiguada
+function leverAnimationLoop() {
+  // Modelo de oscilador armónico amortiguado hacia el ángulo cero (equilibrio)
+  const spring = 0.08;
+  const damping = 0.88;
+
+  const force = -spring * (leverAngle - leverTargetAngle);
+  leverAngularVel = (leverAngularVel + force) * damping;
+  leverAngle += leverAngularVel;
+
+  renderLeverCanvas();
+  requestAnimationFrame(leverAnimationLoop);
+}
+
+function renderLeverCanvas() {
   const canvas = document.getElementById("leverCanvas");
   if (!canvas) return;
 
@@ -367,51 +509,53 @@ function drawLeverSimulation() {
   ctx.lineWidth = 1.5;
   ctx.stroke();
 
-  // 3. Barra horizontal
-  const leftX = fulcrumX - (beamLength / 2);
-  const rightX = fulcrumX + (beamLength / 2);
+  // 3. Barra con inclinación animada (leverAngle)
+  ctx.save();
+  ctx.translate(fulcrumX, fulcrumY);
+  ctx.rotate(leverAngle);
 
   ctx.strokeStyle = "#E2E8F0";
   ctx.lineWidth = 6;
   ctx.beginPath();
-  ctx.moveTo(leftX, fulcrumY);
-  ctx.lineTo(rightX, fulcrumY);
+  ctx.moveTo(-beamLength / 2, 0);
+  ctx.lineTo(beamLength / 2, 0);
   ctx.stroke();
 
-  // 4. Cargas
+  // Marcadores de posición de masas
   const maxMeters = 5;
   const pxPerMeter = (beamLength / 2) / maxMeters;
-
-  const pos1X = fulcrumX - Math.min(leverD1 * pxPerMeter, (beamLength / 2) - 10);
-  const pos2X = fulcrumX + Math.min(leverD2 * pxPerMeter, (beamLength / 2) - 10);
+  const pos1X = -Math.min(leverD1 * pxPerMeter, (beamLength / 2) - 10);
+  const pos2X = Math.min(leverD2 * pxPerMeter, (beamLength / 2) - 10);
 
   // Carga 1
   const size1 = Math.min(14 + (leverF1 / 5), 36);
   ctx.fillStyle = "#38BDF8";
-  ctx.fillRect(pos1X - (size1 / 2), fulcrumY - size1 - 3, size1, size1);
+  ctx.fillRect(pos1X - (size1 / 2), -size1 - 3, size1, size1);
   ctx.strokeStyle = "#FFFFFF";
   ctx.lineWidth = 1;
-  ctx.strokeRect(pos1X - (size1 / 2), fulcrumY - size1 - 3, size1, size1);
+  ctx.strokeRect(pos1X - (size1 / 2), -size1 - 3, size1, size1);
 
   ctx.fillStyle = "#FFFFFF";
   ctx.font = "11px 'Inter', sans-serif";
   ctx.textAlign = "center";
-  ctx.fillText(`${leverF1}kg`, pos1X, fulcrumY - size1 - 7);
-  ctx.fillText(`${leverD1.toFixed(1)}m`, pos1X, fulcrumY + 16);
+  ctx.fillText(`${leverF1}kg`, pos1X, -size1 - 7);
+  ctx.fillText(`${leverD1.toFixed(1)}m`, pos1X, 16);
 
   // Carga 2
   const size2 = Math.min(14 + (leverF2 / 5), 44);
   ctx.fillStyle = "#E5C048";
-  ctx.fillRect(pos2X - (size2 / 2), fulcrumY - size2 - 3, size2, size2);
+  ctx.fillRect(pos2X - (size2 / 2), -size2 - 3, size2, size2);
   ctx.strokeStyle = "#FFFFFF";
   ctx.lineWidth = 1;
-  ctx.strokeRect(pos2X - (size2 / 2), fulcrumY - size2 - 3, size2, size2);
+  ctx.strokeRect(pos2X - (size2 / 2), -size2 - 3, size2, size2);
 
   ctx.fillStyle = "#FFFFFF";
-  ctx.fillText(`${leverF2}kg`, pos2X, fulcrumY - size2 - 7);
-  ctx.fillText(`${leverD2.toFixed(2)}m`, pos2X, fulcrumY + 16);
+  ctx.fillText(`${leverF2}kg`, pos2X, -size2 - 7);
+  ctx.fillText(`${leverD2.toFixed(2)}m`, pos2X, 16);
 
-  // Ecuación
+  ctx.restore();
+
+  // Ecuación superior
   ctx.fillStyle = "#E2E8F0";
   ctx.font = "12px 'Inter', sans-serif";
   ctx.textAlign = "center";
