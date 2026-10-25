@@ -27,7 +27,7 @@
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
 
   <!-- Estilos propios -->
-  <link rel="stylesheet" href="styles.css?v=4.0">
+  <link rel="stylesheet" href="styles.css?v=5.0">
 </head>
 <body>
 
@@ -673,40 +673,50 @@
       </div>
 
       <div class="gallery-grid">
-        <div class="gallery-card">
-          <img src="assets/boceto_inicio.png" alt="Boceto de inicio" class="gallery-thumb" onerror="this.src='https://via.placeholder.com/400x250/1B2F55/FFFFFF?text=Boceto+Figura+1'">
+        <div class="gallery-card" data-title="Figura 1. Boceto Inicial de Estructura" data-desc="Diseño preliminar de la página de inicio, paleta de colores y arquitectura de navegación del portafolio.">
+          <div class="gallery-thumb-wrap">
+            <img src="assets/boceto_inicio.png" alt="Boceto de inicio" class="gallery-thumb" onerror="this.src='https://via.placeholder.com/400x250/1B2F55/FFFFFF?text=Boceto+Figura+1'">
+          </div>
           <div class="gallery-caption">
             <h5>Figura 1. Boceto Inicial de Estructura</h5>
             <p>Diseño preliminar de la página de inicio, paleta de colores y arquitectura de navegación.</p>
           </div>
         </div>
 
-        <div class="gallery-card">
-          <img src="assets/evidencia_foro.png" alt="Participación en el foro" class="gallery-thumb" onerror="this.src='https://via.placeholder.com/400x250/1B2F55/FFFFFF?text=Evidencia+Foro+UNAD'">
+        <div class="gallery-card" data-title="Figura 2. Participación en el Foro Colaborativo" data-desc="Socialización del personaje Arquímedes, propuesta de plataforma tecnológica y distribución temática grupal.">
+          <div class="gallery-thumb-wrap">
+            <img src="assets/evidencia_foro.png" alt="Participación en el foro" class="gallery-thumb" onerror="this.src='https://via.placeholder.com/400x250/1B2F55/FFFFFF?text=Evidencia+Foro+UNAD'">
+          </div>
           <div class="gallery-caption">
             <h5>Figura 2. Participación en el Foro Colaborativo</h5>
             <p>Socialización del personaje Arquímedes, propuesta de plataforma y distribución temática.</p>
           </div>
         </div>
 
-        <div class="gallery-card">
-          <img src="assets/prototipo_inicio.png" alt="Prototipo de inicio" class="gallery-thumb" onerror="this.src='https://via.placeholder.com/400x250/1B2F55/FFFFFF?text=Prototipo+Inicio'">
+        <div class="gallery-card" data-title="Figura 3. Prototipo Web de Inicio" data-desc="Maquetación funcional del sitio web con menú superior, datos del autor y tarjetas de acceso directo.">
+          <div class="gallery-thumb-wrap">
+            <img src="assets/prototipo_inicio.png" alt="Prototipo de inicio" class="gallery-thumb" onerror="this.src='https://via.placeholder.com/400x250/1B2F55/FFFFFF?text=Prototipo+Inicio'">
+          </div>
           <div class="gallery-caption">
             <h5>Figura 3. Prototipo Web de Inicio</h5>
             <p>Maquetación funcional del sitio web con menú superior y tarjetas de acceso directo.</p>
           </div>
         </div>
 
-        <div class="gallery-card">
-          <img src="assets/prototipo_arquimedes.png" alt="Prototipo de reseña" class="gallery-thumb" onerror="this.src='https://via.placeholder.com/400x250/1B2F55/FFFFFF?text=Prototipo+Arquimedes'">
+        <div class="gallery-card" data-title="Figura 4. Prototipo de Reseña de Arquímedes" data-desc="Estructuración formal del contexto histórico, aportes científicos y tratados geométricos fundamentales.">
+          <div class="gallery-thumb-wrap">
+            <img src="assets/prototipo_arquimedes.png" alt="Prototipo de reseña" class="gallery-thumb" onerror="this.src='https://via.placeholder.com/400x250/1B2F55/FFFFFF?text=Prototipo+Arquimedes'">
+          </div>
           <div class="gallery-caption">
             <h5>Figura 4. Prototipo de Reseña de Arquímedes</h5>
             <p>Estructuración formal del contexto histórico, aportes científicos y tratados geométricos.</p>
           </div>
         </div>
 
-        <div class="gallery-card">
-          <img src="assets/prototipo_recurso_pi.png" alt="Prototipo interactivo de Pi" class="gallery-thumb" onerror="this.src='https://via.placeholder.com/400x250/1B2F55/FFFFFF?text=Prototipo+Recurso+Pi'">
+        <div class="gallery-card" data-title="Figura 5. Prototipo del Laboratorio de Pi" data-desc="Implementación del motor gráfico de aproximación poligonal según el tratado de Arquímedes.">
+          <div class="gallery-thumb-wrap">
+            <img src="assets/prototipo_recurso_pi.png" alt="Prototipo interactivo de Pi" class="gallery-thumb" onerror="this.src='https://via.placeholder.com/400x250/1B2F55/FFFFFF?text=Prototipo+Recurso+Pi'">
+          </div>
           <div class="gallery-caption">
             <h5>Figura 5. Prototipo del Laboratorio de Pi</h5>
             <p>Implementación del motor gráfico de aproximación poligonal según el tratado de Arquímedes.</p>
@@ -807,6 +817,18 @@
   <!-- Botón Flotante Volver Arriba -->
   <button class="scroll-top-btn" id="scrollTopBtn" title="Volver al inicio de la página" aria-label="Volver arriba">&#9650;</button>
 
+  <!-- Modal Lightbox de Zoom para Figuras y Evidencias -->
+  <div id="imageModal" class="image-modal" role="dialog" aria-hidden="true">
+    <button class="modal-close-btn" id="modalCloseBtn" aria-label="Cerrar vista ampliada">&times;</button>
+    <div class="modal-content-wrapper">
+      <img id="modalImg" src="" alt="Vista ampliada de la evidencia">
+      <div class="modal-caption" id="modalCaption">
+        <h4 id="modalCaptionTitle"></h4>
+        <p id="modalCaptionDesc"></p>
+      </div>
+    </div>
+  </div>
+
   <!-- Footer Institucional -->
   <footer>
     <div class="footer-container">
@@ -846,6 +868,6 @@
   </footer>
 
   <!-- Scripts propios -->
-  <script src="script.js?v=4.0"></script>
+  <script src="script.js?v=5.0"></script>
 </body>
 </html>

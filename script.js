@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initLabTabs();
   initGuionToggle();
   initScrollTop();
+  initLightboxModal();
 });
 
 /* ==========================================================================
@@ -931,5 +932,61 @@ function initScrollTop() {
 
   scrollBtn.addEventListener("click", () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+}
+
+
+/* ==========================================================================
+   7. MODAL LIGHTBOX DE ZOOM PARA EVIDENCIAS Y FIGURAS
+   ========================================================================== */
+function initLightboxModal() {
+  const modal = document.getElementById("imageModal");
+  const modalImg = document.getElementById("modalImg");
+  const modalTitle = document.getElementById("modalCaptionTitle");
+  const modalDesc = document.getElementById("modalCaptionDesc");
+  const closeBtn = document.getElementById("modalCloseBtn");
+  const cards = document.querySelectorAll(".gallery-card");
+
+  if (!modal || !modalImg) return;
+
+  cards.forEach(card => {
+    card.addEventListener("click", () => {
+      const img = card.querySelector("img");
+      if (!img) return;
+
+      const title = card.getAttribute("data-title") || card.querySelector("h5")?.textContent || "Figura";
+      const desc = card.getAttribute("data-desc") || card.querySelector("p")?.textContent || "";
+
+      modalImg.src = img.src;
+      modalImg.alt = title;
+      if (modalTitle) modalTitle.textContent = title;
+      if (modalDesc) modalDesc.textContent = desc;
+
+      modal.classList.add("open");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    });
+  });
+
+  function closeModal() {
+    modal.classList.remove("open");
+    modal.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+  }
+
+  if (closeBtn) {
+    closeBtn.addEventListener("click", closeModal);
+  }
+
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && modal.classList.contains("open")) {
+      closeModal();
+    }
   });
 }
