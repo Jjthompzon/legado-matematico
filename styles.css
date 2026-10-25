@@ -1177,3 +1177,18 @@ footer {
   color: var(--navy-dark);
   transform: translateY(-3px);
 }
+
+
+/* Botón de Animación Activa en el Laboratorio */
+.btn-playing {
+  background: linear-gradient(135deg, #10B981, #059669) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 0 14px rgba(16, 185, 129, 0.45) !important;
+  animation: pulseBtn 1.8s infinite;
+}
+
+@keyframes pulseBtn {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
