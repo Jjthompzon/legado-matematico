@@ -1,14 +1,35 @@
 /* ==========================================================================
    LEGADO MATEMÁTICO - INTERACTIVIDAD Y MOTOR MATEMÁTICO
    Universidad Nacional Abierta y a Distancia (UNAD)
+   Curso: Historia de las Matemáticas (551104)
    ========================================================================== */
 
 document.addEventListener("DOMContentLoaded", () => {
   initNavigation();
+  initKaTeX();
   initArchimedesLab();
   initLeverLab();
   initLabTabs();
+  initGuionToggle();
+  initScrollTop();
 });
+
+/* ==========================================================================
+   0. RENDERIZADO MATEMÁTICO ROBUSTO (KaTeX)
+   ========================================================================== */
+function initKaTeX() {
+  if (typeof renderMathInElement === "function") {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "\\[", right: "\\]", display: true },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "$", right: "$", display: false }
+      ],
+      throwOnError: false
+    });
+  }
+}
 
 /* ==========================================================================
    1. NAVEGACIÓN Y MENÚ MÓVIL
@@ -34,7 +55,7 @@ function initNavigation() {
   window.addEventListener("scroll", () => {
     let current = "";
     const sections = document.querySelectorAll("section[id]");
-    const scrollPos = window.scrollY + 120;
+    const scrollPos = window.scrollY + 140;
 
     sections.forEach(section => {
       const sectionTop = section.offsetTop;
@@ -54,7 +75,7 @@ function initNavigation() {
 }
 
 /* ==========================================================================
-   2. PESTAÑAS DEL LABORATORIO
+   2. PESTAÑAS DEL LABORATORIO INTERACTIVO
    ========================================================================== */
 function initLabTabs() {
   const tabBtns = document.querySelectorAll(".lab-tab-btn");
@@ -71,7 +92,6 @@ function initLabTabs() {
       const activeView = document.getElementById(target);
       if (activeView) activeView.classList.add("active");
 
-      // Redibujar canvas correspondientes al cambiar de pestaña
       if (target === "tab-exhaucion") {
         drawArchimedesSimulation();
       } else if (target === "tab-palanca") {
@@ -110,7 +130,6 @@ function initArchimedesLab() {
     });
   }
 
-  // Redibujado en resize
   window.addEventListener("resize", drawArchimedesSimulation);
   drawArchimedesSimulation();
 }
@@ -118,49 +137,50 @@ function initArchimedesLab() {
 function drawArchimedesSimulation() {
   const canvas = document.getElementById("circleCanvas");
   if (!canvas) return;
+
+  const dpr = window.devicePixelRatio || 1;
+  const cssSize = 380;
+  canvas.width = cssSize * dpr;
+  canvas.height = cssSize * dpr;
+  canvas.style.width = cssSize + "px";
+  canvas.style.height = cssSize + "px";
+
   const ctx = canvas.getContext("2d");
+  ctx.resetTransform();
+  ctx.scale(dpr, dpr);
 
-  // Ajuste de resolución
-  const size = 380;
-  canvas.width = size;
-  canvas.height = size;
-
-  const cx = size / 2;
-  const cy = size / 2;
-  const R = size * 0.38;
+  const cx = cssSize / 2;
+  const cy = cssSize / 2;
+  const R = cssSize * 0.38;
   const n = currentSides;
 
-  ctx.clearRect(0, 0, size, size);
+  ctx.clearRect(0, 0, cssSize, cssSize);
 
-  // 1. Fondo técnico oscuro
+  // 1. Fondo técnico
   ctx.fillStyle = "#0B132B";
-  ctx.fillRect(0, 0, size, size);
+  ctx.fillRect(0, 0, cssSize, cssSize);
 
   // Cuadrícula sutil
   ctx.strokeStyle = "rgba(255, 255, 255, 0.05)";
   ctx.lineWidth = 1;
   const step = 20;
-  for (let x = 0; x < size; x += step) {
+  for (let x = 0; x < cssSize; x += step) {
     ctx.beginPath();
-    ctx.moveTo(x, 0);
-    ctx.lineTo(x, size);
-    ctx.stroke();
+    ctx.moveTo(x, 0); ctx.lineTo(x, cssSize); ctx.stroke();
   }
-  for (let y = 0; y < size; y += step) {
+  for (let y = 0; y < cssSize; y += step) {
     ctx.beginPath();
-    ctx.moveTo(0, y);
-    ctx.lineTo(size, y);
-    ctx.stroke();
+    ctx.moveTo(0, y); ctx.lineTo(cssSize, y); ctx.stroke();
   }
 
   // Ejes ortogonales
   ctx.strokeStyle = "rgba(255, 255, 255, 0.15)";
   ctx.beginPath();
-  ctx.moveTo(cx, 10); ctx.lineTo(cx, size - 10);
-  ctx.moveTo(10, cy); ctx.lineTo(size - 10, cy);
+  ctx.moveTo(cx, 10); ctx.lineTo(cx, cssSize - 10);
+  ctx.moveTo(10, cy); ctx.lineTo(cssSize - 10, cy);
   ctx.stroke();
 
-  // 2. Polígono Circunscrito (Exterior - Dorado)
+  // 2. Polígono Circunscrito (Dorado)
   const angleStep = (2 * Math.PI) / n;
   const halfAngle = angleStep / 2;
   const R_circ = R / Math.cos(halfAngle);
@@ -180,14 +200,14 @@ function drawArchimedesSimulation() {
   ctx.lineWidth = 2;
   ctx.stroke();
 
-  // 3. Circunferencia Teórica (Blanco / Celeste)
+  // 3. Circunferencia Teórica
   ctx.beginPath();
   ctx.arc(cx, cy, R, 0, 2 * Math.PI);
   ctx.strokeStyle = "rgba(255, 255, 255, 0.85)";
-  ctx.lineWidth = 2.5;
+  ctx.lineWidth = 2;
   ctx.stroke();
 
-  // 4. Polígono Inscrito (Interior - Azul Cian)
+  // 4. Polígono Inscrito (Azul Cian)
   ctx.beginPath();
   for (let i = 0; i < n; i++) {
     const angle = i * angleStep - halfAngle;
@@ -216,7 +236,7 @@ function drawArchimedesSimulation() {
   const avgEstimate = (lowerBound + upperBound) / 2;
   const errorPct = Math.abs((avgEstimate - realPi) / realPi) * 100;
 
-  // Actualizar métricas en el DOM
+  // Actualizar DOM
   const valN = document.getElementById("metricN");
   const valLower = document.getElementById("metricLower");
   const valUpper = document.getElementById("metricUpper");
@@ -231,29 +251,29 @@ function drawArchimedesSimulation() {
   if (valArchimedesInterval) {
     if (n === 96) {
       valArchimedesInterval.innerHTML = `
-        <strong>Cotas exactas del tratado de Arquímedes (n = 96):</strong><br>
-        <span style="color:#38BDF8">3 + 10/71 (≈ 3.140845)</span> 
+        <strong>Cotas del tratado de Arquímedes (n = 96):</strong><br>
+        <span style="color:#0284C7">3 + 10/71 (≈ 3.140845)</span> 
         &lt; <strong>π</strong> &lt; 
-        <span style="color:#E5C048">3 + 1/7 (≈ 3.142857)</span>
+        <span style="color:#B45309">3 + 1/7 (≈ 3.142857)</span>
       `;
     } else {
       valArchimedesInterval.innerHTML = `
-        <strong>Acotación para n = ${n}:</strong><br>
-        <span style="color:#38BDF8">${lowerBound.toFixed(6)}</span> 
+        <strong>Acotación actual para n = ${n}:</strong><br>
+        <span style="color:#0284C7">${lowerBound.toFixed(6)}</span> 
         &lt; <strong>π</strong> &lt; 
-        <span style="color:#E5C048">${upperBound.toFixed(6)}</span>
+        <span style="color:#B45309">${upperBound.toFixed(6)}</span>
       `;
     }
   }
 }
 
 /* ==========================================================================
-   4. SIMULACIÓN: LEY DE LA PALANCA DE ARQUÍMEDES (F1 * d1 = F2 * d2)
+   4. SIMULACIÓN: LEY DE LA PALANCA (F1 * d1 = F2 * d2)
    ========================================================================== */
-let leverF1 = 50;  // Peso 1 en N o kg
-let leverD1 = 4;   // Distancia 1 en m
-let leverF2 = 100; // Peso 2 en N o kg
-let leverD2 = 2;   // Distancia 2 en m
+let leverF1 = 50;
+let leverD1 = 4;
+let leverF2 = 100;
+let leverD2 = 2;
 
 function initLeverLab() {
   const f1Input = document.getElementById("leverF1");
@@ -283,7 +303,6 @@ function initLeverLab() {
 }
 
 function updateLever() {
-  // Calculamos d2 necesario para el equilibrio: d2 = (F1 * d1) / F2
   leverD2 = (leverF1 * leverD1) / leverF2;
 
   const f1Val = document.getElementById("valF1");
@@ -306,16 +325,21 @@ function updateLever() {
 function drawLeverSimulation() {
   const canvas = document.getElementById("leverCanvas");
   if (!canvas) return;
-  const ctx = canvas.getContext("2d");
 
+  const dpr = window.devicePixelRatio || 1;
   const width = 380;
   const height = 240;
-  canvas.width = width;
-  canvas.height = height;
+  canvas.width = width * dpr;
+  canvas.height = height * dpr;
+  canvas.style.width = width + "px";
+  canvas.style.height = height + "px";
+
+  const ctx = canvas.getContext("2d");
+  ctx.resetTransform();
+  ctx.scale(dpr, dpr);
 
   ctx.clearRect(0, 0, width, height);
 
-  // Fondo oscuro
   ctx.fillStyle = "#0B132B";
   ctx.fillRect(0, 0, width, height);
 
@@ -331,7 +355,7 @@ function drawLeverSimulation() {
   ctx.lineTo(width - 15, fulcrumY + 35);
   ctx.stroke();
 
-  // 2. Punto de Apoyo (Triángulo Fulcro de Arquímedes)
+  // 2. Fulcro de Arquímedes
   ctx.beginPath();
   ctx.moveTo(fulcrumX, fulcrumY);
   ctx.lineTo(fulcrumX - 22, fulcrumY + 35);
@@ -343,26 +367,25 @@ function drawLeverSimulation() {
   ctx.lineWidth = 1.5;
   ctx.stroke();
 
-  // 3. Barra de la Palanca en equilibrio horizontal
+  // 3. Barra horizontal
   const leftX = fulcrumX - (beamLength / 2);
   const rightX = fulcrumX + (beamLength / 2);
 
   ctx.strokeStyle = "#E2E8F0";
-  ctx.lineWidth = 7;
+  ctx.lineWidth = 6;
   ctx.beginPath();
   ctx.moveTo(leftX, fulcrumY);
   ctx.lineTo(rightX, fulcrumY);
   ctx.stroke();
 
-  // 4. Marcadores de posición de las cargas
-  // Escala máxima de brazo = 5 metros
+  // 4. Cargas
   const maxMeters = 5;
   const pxPerMeter = (beamLength / 2) / maxMeters;
 
   const pos1X = fulcrumX - Math.min(leverD1 * pxPerMeter, (beamLength / 2) - 10);
   const pos2X = fulcrumX + Math.min(leverD2 * pxPerMeter, (beamLength / 2) - 10);
 
-  // Carga 1 (Izquierda - azul)
+  // Carga 1
   const size1 = Math.min(14 + (leverF1 / 5), 36);
   ctx.fillStyle = "#38BDF8";
   ctx.fillRect(pos1X - (size1 / 2), fulcrumY - size1 - 3, size1, size1);
@@ -370,14 +393,13 @@ function drawLeverSimulation() {
   ctx.lineWidth = 1;
   ctx.strokeRect(pos1X - (size1 / 2), fulcrumY - size1 - 3, size1, size1);
 
-  // Texto Carga 1
   ctx.fillStyle = "#FFFFFF";
-  ctx.font = "10px sans-serif";
+  ctx.font = "11px 'Inter', sans-serif";
   ctx.textAlign = "center";
   ctx.fillText(`${leverF1}kg`, pos1X, fulcrumY - size1 - 7);
   ctx.fillText(`${leverD1.toFixed(1)}m`, pos1X, fulcrumY + 16);
 
-  // Carga 2 (Derecha - dorada)
+  // Carga 2
   const size2 = Math.min(14 + (leverF2 / 5), 44);
   ctx.fillStyle = "#E5C048";
   ctx.fillRect(pos2X - (size2 / 2), fulcrumY - size2 - 3, size2, size2);
@@ -385,14 +407,54 @@ function drawLeverSimulation() {
   ctx.lineWidth = 1;
   ctx.strokeRect(pos2X - (size2 / 2), fulcrumY - size2 - 3, size2, size2);
 
-  // Texto Carga 2
   ctx.fillStyle = "#FFFFFF";
   ctx.fillText(`${leverF2}kg`, pos2X, fulcrumY - size2 - 7);
   ctx.fillText(`${leverD2.toFixed(2)}m`, pos2X, fulcrumY + 16);
 
-  // Ecuación en pantalla
+  // Ecuación
   ctx.fillStyle = "#E2E8F0";
-  ctx.font = "12px sans-serif";
+  ctx.font = "12px 'Inter', sans-serif";
   ctx.textAlign = "center";
-  ctx.fillText(`F₁ · d₁  =  F₂ · d₂   →   (${leverF1} × ${leverD1.toFixed(1)}) = (${leverF2} × ${leverD2.toFixed(2)})`, fulcrumX, 30);
+  ctx.fillText(`F₁ · d₁ = F₂ · d₂   →   (${leverF1} × ${leverD1.toFixed(1)}) = (${leverF2} × ${leverD2.toFixed(2)})`, fulcrumX, 28);
+}
+
+/* ==========================================================================
+   5. DESPLIEGUE DEL GUION TÉCNICO DE LA ENTREVISTA (FASE 2)
+   ========================================================================== */
+function initGuionToggle() {
+  const btn = document.getElementById("btnToggleGuion");
+  const accordion = document.getElementById("guionAccordion");
+
+  if (btn && accordion) {
+    btn.addEventListener("click", () => {
+      const isOpen = accordion.classList.contains("open");
+      if (isOpen) {
+        accordion.classList.remove("open");
+        btn.innerHTML = "Consultar Guion Técnico y Estructura (5:00 min) &darr;";
+      } else {
+        accordion.classList.add("open");
+        btn.innerHTML = "Ocultar Guion Técnico &uarr;";
+      }
+    });
+  }
+}
+
+/* ==========================================================================
+   6. BOTÓN FLOTANTE SCROLL-TO-TOP
+   ========================================================================== */
+function initScrollTop() {
+  const scrollBtn = document.getElementById("scrollTopBtn");
+  if (!scrollBtn) return;
+
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 400) {
+      scrollBtn.classList.add("visible");
+    } else {
+      scrollBtn.classList.remove("visible");
+    }
+  });
+
+  scrollBtn.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
 }

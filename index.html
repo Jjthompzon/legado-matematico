@@ -5,6 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Legado Matemático | Portafolio Digital de Historia de las Matemáticas - UNAD</title>
   
+  <!-- Favicon SVG en alta resolución con el símbolo Pi -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%231B2F55' stroke='%23C9A227' stroke-width='4'/%3E%3Ctext x='50' y='67' font-size='55' font-family='Georgia, serif' font-weight='bold' fill='%23C9A227' text-anchor='middle'%3E%CF%80%3C/text%3E%3C/svg%3E">
+
+  <!-- Metadatos Open Graph para WhatsApp, Teams y Redes -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Legado Matemático | Portafolio Digital de Historia de las Matemáticas - UNAD">
+  <meta property="og:description" content="Portafolio interactivo con laboratorios del método de exhaución de Arquímedes, ley de la palanca, línea de tiempo histórica y análisis epistemológico.">
+  <meta property="og:url" content="https://legado-matematico.vercel.app">
+  <meta property="og:image" content="https://legado-matematico.vercel.app/assets/01_Inicio_Portafolio_Legado_Matematico.png">
+  <meta name="description" content="Portafolio digital interactivo del curso Historia de las Matemáticas (551104) de la UNAD. Licenciatura en Matemáticas.">
+
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,8 +24,7 @@
   <!-- KaTeX para renderizado de fórmulas matemáticas -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" 
-          onload="renderMathInElement(document.body);"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
 
   <!-- Estilos propios -->
   <link rel="stylesheet" href="styles.css">
@@ -252,7 +262,7 @@
             <h3>Arquímedes de Siracusa</h3>
             <span class="lifespan">c. 287 a. C. – 212 a. C. &bull; Siracusa, Magna Grecia (Sicilia)</span>
           </div>
-          <span class="character-tag">Aporte Desarrollado por: Jhon Sebastian Bautista</span>
+          <span class="character-tag">Aporte Individual Desarrollado por: Jhon Sebastian Bautista Hernandez</span>
         </div>
 
         <div class="character-body-grid">
@@ -347,9 +357,19 @@
         </div>
       </article>
 
+      <!-- Banner de Co-Construcción Colaborativa Grupal -->
+      <div class="collab-peer-banner">
+        <span style="font-size: 1.35rem;">👥</span>
+        <div>
+          <strong>Espacio de Integración Colaborativa &bull; Grupo 551104_45:</strong> 
+          Las siguientes fichas corresponden a los pensadores concertados en el foro para ser investigados y complementados por los demás integrantes del grupo colaborativo.
+        </div>
+      </div>
+
       <!-- Tarjetas Complementarias de los demás personajes -->
       <div class="peer-grid">
         <div class="peer-card">
+          <span class="peer-collab-badge">Disponible para Integrante del Grupo</span>
           <h4>Galileo Galilei</h4>
           <span class="era">1564 – 1642 &bull; Pisa / Florencia, Italia</span>
           <p>
@@ -360,6 +380,7 @@
         </div>
 
         <div class="peer-card">
+          <span class="peer-collab-badge">Disponible para Integrante del Grupo</span>
           <h4>Isaac Newton</h4>
           <span class="era">1643 – 1727 &bull; Woolsthorpe / Cambridge, Inglaterra</span>
           <p>
@@ -370,6 +391,7 @@
         </div>
 
         <div class="peer-card">
+          <span class="peer-collab-badge">Disponible para Integrante del Grupo</span>
           <h4>Gottfried Wilhelm Leibniz</h4>
           <span class="era">1646 – 1716 &bull; Leipzig / Hannover, Sacro Imperio</span>
           <p>
@@ -393,30 +415,68 @@
           <div class="video-placeholder">
             <div class="play-icon">&#9658;</div>
             <h4 style="color: #FFFFFF; font-size: 1.25rem; margin-bottom: 0.5rem;">Panel de Expertos: Evolución del Pensamiento Matemático</h4>
+            
+            <div class="video-status-badge">
+              <span class="status-dot"></span>
+              En fase de producción y edición final &bull; Subtitulado sincronizado
+            </div>
+
             <p style="font-size: 0.85rem; color: #CBD5E1; margin-bottom: 1.25rem;">
-              Grabación en formato de entrevista especializada con subtitulado formal sincronizado (Duración: 05:00 minutos exactos).
+              Grabación en formato de entrevista especializada de <strong>05:00 minutos reglamentarios</strong> conforme al guion técnico oficial de la Fase 2.
             </p>
-            <a href="https://youtu.be" target="_blank" class="btn btn-primary" style="font-size: 0.85rem;">
-              Reproducir Video en YouTube &rarr;
-            </a>
+
+            <button class="btn btn-primary" id="btnToggleGuion" style="font-size: 0.85rem;">
+              Consultar Guion Técnico y Estructura (5:00 min) &darr;
+            </button>
+
+            <!-- Desglose desplegable del Guion Técnico -->
+            <div class="guion-accordion" id="guionAccordion">
+              <div class="guion-block">
+                <h5>Bloque 1: Apertura y Contextualización Epistémica [00:00 – 00:35]</h5>
+                <p><strong>Pregunta:</strong> De la técnica empírica a la demostración axiomática.</p>
+                <p><strong>Enfoque:</strong> Cómo las matemáticas transitaron de reglas operativas aisladas en el oriente antiguo hacia un sistema deductivo universal en la Hélade.</p>
+              </div>
+
+              <div class="guion-block">
+                <h5>Bloque 2: Antiguo Egipto – Agrimensura y Volumetría [00:35 – 01:25]</h5>
+                <p><strong>Pregunta:</strong> Restricciones materiales y el papiro de Moscú.</p>
+                <p><strong>Enfoque:</strong> Delimitación de parcelas tras las crecidas del Nilo mediante agrimensura y cálculo del tronco de pirámide (problema 14).</p>
+              </div>
+
+              <div class="guion-block">
+                <h5>Bloque 3: Mesopotamia – Álgebra Numérica y Tablillas [01:25 – 02:25]</h5>
+                <p><strong>Pregunta:</strong> Notación sexagesimal y cálculo cuadrático.</p>
+                <p><strong>Enfoque:</strong> Sistema de valor posicional en base 60, aproximaciones numéricas de raíces y resolución algorítmica de problemas cuadráticos.</p>
+              </div>
+
+              <div class="guion-block">
+                <h5>Bloque 4: Grecia Clásica – Tales y las Aporías de Zenón [02:25 – 03:35]</h5>
+                <p><strong>Pregunta:</strong> El nacimiento de la prueba y la crisis del continuo.</p>
+                <p><strong>Enfoque:</strong> La deducción lógica con Tales y la problematización de la divisibilidad infinita del espacio-tiempo con las paradojas de Zenón.</p>
+              </div>
+
+              <div class="guion-block">
+                <h5>Bloque 5: Arquímedes y Síntesis Formativa [03:35 – 05:00]</h5>
+                <p><strong>Pregunta:</strong> La articulación físico-geométrica y su impacto pedagógico.</p>
+                <p><strong>Enfoque:</strong> El método de exhaución, precálculo integral, balance de momentos y el valor de la génesis histórica en la enseñanza de las matemáticas.</p>
+              </div>
+            </div>
+
           </div>
         </div>
 
         <div class="video-info">
-          <h4>Ficha Técnica y Guion de Producción</h4>
+          <h4>Ficha Técnica y Parámetros de Producción</h4>
           <p style="font-size: 0.9rem; color: var(--text-main);">
-            El recurso audiovisual fue concebido bajo el formato de diálogo socrático entre un moderador académico y un especialista 
-            en epistemología de las matemáticas, analizando el tránsito histórico entre las técnicas operativas empíricas y la deducción lógica.
+            El recurso audiovisual fue estructurado bajo la modalidad de diálogo entre moderador y especialista en didáctica de las matemáticas, cumpliendo estrictamente los tiempos y criterios de la rúbrica institucional.
           </p>
 
           <ul class="video-specs">
-            <li><strong>Duración exacta:</strong> 05:00 minutos cronometrados según la rúbrica.</li>
-            <li><strong>Bloque 1 (00:00–00:35):</strong> Apertura y contextualización epistémica.</li>
-            <li><strong>Bloque 2 (00:35–01:25):</strong> Antiguo Egipto: agrimensura, Seked y volumetría.</li>
-            <li><strong>Bloque 3 (01:25–02:25):</strong> Mesopotamia: sistema sexagesimal y tablas cuadráticas.</li>
-            <li><strong>Bloque 4 (02:25–03:35):</strong> Filosofía griega, Tales y aporías de Zenón.</li>
-            <li><strong>Bloque 5 (03:35–05:00):</strong> Arquímedes, síntesis deductiva y conclusiones formativas.</li>
-            <li><strong>Accesibilidad:</strong> Subtitulado completo sincronizado en español conforme a lineamientos UNAD.</li>
+            <li><strong>Duración reglamentaria:</strong> 05:00 minutos cronometrados de forma exacta.</li>
+            <li><strong>Modalidad de grabación:</strong> Dos encuadres alternados (Moderador / Especialista).</li>
+            <li><strong>Contenido curricular:</strong> Egipto, Mesopotamia, Tales, Zenón y Arquímedes.</li>
+            <li><strong>Accesibilidad:</strong> Subtitulado sincronizado en español para inclusión educativa.</li>
+            <li><strong>Estado:</strong> Guion consolidado y producción audiovisual en curso para integración final.</li>
           </ul>
         </div>
       </div>
@@ -684,6 +744,9 @@
     </section>
 
   </main>
+
+  <!-- Botón Flotante Volver Arriba -->
+  <button class="scroll-top-btn" id="scrollTopBtn" title="Volver al inicio de la página" aria-label="Volver arriba">&#9650;</button>
 
   <!-- Footer Institucional -->
   <footer>
