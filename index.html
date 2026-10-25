@@ -27,7 +27,7 @@
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
 
   <!-- Estilos propios -->
-  <link rel="stylesheet" href="styles.css?v=3.5">
+  <link rel="stylesheet" href="styles.css?v=4.0">
 </head>
 <body>
 
@@ -571,42 +571,91 @@
         <!-- Vista 2: Ley de la Palanca -->
         <div class="lab-view" id="tab-palanca">
           <div class="canvas-wrapper">
-            <canvas id="leverCanvas" width="380" height="240"></canvas>
-            <div style="font-size: 0.75rem; color: #94A3B8; margin-top: 0.5rem;">
-              «Dadme un punto de apoyo y moveré el mundo» — Arquímedes
+            <!-- Barra superior del instrumento -->
+            <div style="display: flex; justify-content: space-between; width: 100%; align-items: center; margin-bottom: 0.6rem; font-size: 0.8rem; color: #E2E8F0;">
+              <span><strong>Instrumento:</strong> Balanza Racional de Arquímedes</span>
+              <span id="leverStatusBadge" class="badge-balanced" style="padding: 3px 10px; border-radius: 4px; font-weight: 700; font-size: 0.75rem;">
+                ● EQUILIBRIO PERFECTO
+              </span>
+            </div>
+
+            <canvas id="leverCanvas" width="420" height="270"></canvas>
+
+            <div style="font-size: 0.78rem; color: #CBD5E1; margin-top: 0.6rem; display: flex; justify-content: space-between; width: 100%;">
+              <span><span style="color:#38BDF8;">■ Carga Izquierda (\(F_1\))</span></span>
+              <span style="font-style: italic; color: #C9A227;">«Dadme un punto de apoyo y moveré el mundo»</span>
+              <span><span style="color:#E5C048;">■ Carga Derecha (\(F_2\))</span></span>
             </div>
           </div>
 
           <div class="lab-controls">
-            <div class="control-group">
-              <label>Fuerza 1 / Masa izquierda (\(F_1\)): <span id="valF1">50 kg</span></label>
-              <input type="range" id="leverF1" min="10" max="150" value="50" style="width: 100%;">
+            <!-- Selector de modo -->
+            <div style="display: flex; gap: 0.5rem; margin-bottom: 1.25rem;">
+              <button class="btn btn-primary" id="btnModeAuto" style="flex: 1; padding: 0.55rem; font-size: 0.82rem; text-align: center; justify-content: center;">
+                Modo Didáctico (Auto-Equilibrio)
+              </button>
+              <button class="btn btn-secondary" id="btnModeFree" style="flex: 1; padding: 0.55rem; font-size: 0.82rem; text-align: center; justify-content: center;">
+                Modo Desafío Libre
+              </button>
             </div>
 
-            <div class="control-group">
-              <label>Brazo de palanca 1 (\(d_1\)): <span id="valD1">4.0 m</span></label>
-              <input type="range" id="leverD1" min="1" max="5" step="0.2" value="4.0" style="width: 100%;">
+            <!-- Controles Carga Izquierda -->
+            <div style="background: rgba(56, 189, 248, 0.08); border-left: 3px solid #38BDF8; padding: 0.85rem 1.15rem; border-radius: 6px; margin-bottom: 0.85rem;">
+              <div class="control-group" style="margin-bottom: 0.65rem;">
+                <label style="display:flex; justify-content:space-between; align-items:center;">
+                  <span>Fuerza / Masa izquierda (\(F_1\)):</span>
+                  <strong id="valF1" style="color:#0284C7; font-size: 1rem;">50 kg</strong>
+                </label>
+                <input type="range" id="leverF1" min="10" max="150" value="50" style="width: 100%;">
+              </div>
+
+              <div class="control-group" style="margin-bottom: 0;">
+                <label style="display:flex; justify-content:space-between; align-items:center;">
+                  <span>Brazo izquierdo (\(d_1\)):</span>
+                  <strong id="valD1" style="color:#0284C7; font-size: 1rem;">4.0 m</strong>
+                </label>
+                <input type="range" id="leverD1" min="1" max="5" step="0.2" value="4.0" style="width: 100%;">
+              </div>
             </div>
 
-            <div class="control-group">
-              <label>Fuerza 2 / Masa derecha (\(F_2\)): <span id="valF2">100 kg</span></label>
-              <input type="range" id="leverF2" min="20" max="200" value="100" style="width: 100%;">
+            <!-- Controles Carga Derecha -->
+            <div style="background: rgba(201, 162, 39, 0.08); border-left: 3px solid #C9A227; padding: 0.85rem 1.15rem; border-radius: 6px; margin-bottom: 1rem;">
+              <div class="control-group" style="margin-bottom: 0.65rem;">
+                <label style="display:flex; justify-content:space-between; align-items:center;">
+                  <span>Fuerza / Masa derecha (\(F_2\)):</span>
+                  <strong id="valF2" style="color:#B45309; font-size: 1rem;">100 kg</strong>
+                </label>
+                <input type="range" id="leverF2" min="20" max="200" value="100" style="width: 100%;">
+              </div>
+
+              <div class="control-group" style="margin-bottom: 0;">
+                <label style="display:flex; justify-content:space-between; align-items:center;">
+                  <span>Brazo derecho (\(d_2\)):</span>
+                  <strong id="valD2" style="color:#B45309; font-size: 1rem;">2.00 m</strong>
+                </label>
+                <input type="range" id="leverD2" min="0.5" max="5" step="0.1" value="2.0" style="width: 100%;" disabled>
+              </div>
             </div>
 
+            <!-- Panel de métricas y ventaja mecánica -->
             <div class="metrics-box">
               <div class="metric-row">
-                <span>Brazo de equilibrio calculado (\(d_2\)):</span>
-                <strong id="valD2" style="color: #B45309;">2.00 m</strong>
+                <span>Momento izquierdo (\(M_1 = F_1 \cdot d_1\)):</span>
+                <strong id="valTorque1" style="color: #0284C7;">200.0 kg·m</strong>
               </div>
               <div class="metric-row">
-                <span>Momento de fuerza izquierdo (\(M_1\)):</span>
-                <strong id="valTorque1">200.0 kg·m</strong>
+                <span>Momento derecho (\(M_2 = F_2 \cdot d_2\)):</span>
+                <strong id="valTorque2" style="color: #B45309;">200.0 kg·m</strong>
               </div>
               <div class="metric-row">
-                <span>Momento de fuerza derecho (\(M_2\)):</span>
-                <strong id="valTorque2">200.0 kg·m</strong>
+                <span>Ventaja Mecánica (\(VM = d_1 / d_2\)):</span>
+                <strong id="valMechanicalAdv" style="color: #16A34A;">2.00× (Multiplica la fuerza)</strong>
               </div>
-              <div style="font-size: 0.82rem; margin-top: 0.6rem; color: #475569; text-align: center;">
+              <div class="metric-row">
+                <span>Torque Neto (\(\Delta M\)):</span>
+                <strong id="valNetTorque" style="color: #16A34A;">0.0 kg·m (Equilibrio)</strong>
+              </div>
+              <div style="font-size: 0.82rem; margin-top: 0.65rem; color: #475569; text-align: center;">
                 Condición de equilibrio estático arquimediano: \(\sum \tau = F_1 d_1 - F_2 d_2 = 0\)
               </div>
             </div>
@@ -797,6 +846,6 @@
   </footer>
 
   <!-- Scripts propios -->
-  <script src="script.js?v=3.5"></script>
+  <script src="script.js?v=4.0"></script>
 </body>
 </html>

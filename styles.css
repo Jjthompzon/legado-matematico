@@ -1192,3 +1192,66 @@ footer {
   50% { transform: scale(1.02); }
   100% { transform: scale(1); }
 }
+
+
+/* ==========================================================================
+   ESTILOS MEJORADOS PARA LA BALANZA CLÁSICA DE ARQUÍMEDES
+   ========================================================================== */
+
+/* Sliders personalizados de alta gama */
+input[type=range] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: #CBD5E1;
+  height: 6px;
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+input[type=range]:hover {
+  background: #94A3B8;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--accent-gold);
+  border: 2px solid #FFFFFF;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  transition: transform 0.15s, background-color 0.15s;
+}
+
+input[type=range]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  background: var(--gold-hover);
+}
+
+input[type=range]:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+input[type=range]:disabled::-webkit-slider-thumb {
+  background: #94A3B8;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Insignias de la Balanza */
+.badge-balanced {
+  background: rgba(16, 185, 129, 0.18) !important;
+  color: #10B981 !important;
+  border: 1px solid rgba(16, 185, 129, 0.4) !important;
+}
+
+.badge-unbalanced {
+  background: rgba(239, 68, 68, 0.18) !important;
+  color: #EF4444 !important;
+  border: 1px solid rgba(239, 68, 68, 0.4) !important;
+}

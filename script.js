@@ -101,8 +101,8 @@ function initLabTabs() {
 /* ==========================================================================
    3. SIMULACIÓN Y ANIMACIÓN VISUAL: MÉTODO DE EXHAUCIÓN DE ARQUÍMEDES
    ========================================================================== */
-let currentSides = 6; // Arranca en 6 para que la forma poligonal sea 100% visible
-let isAutoPlaying = true; // Arranca animando automáticamente para que el usuario vea acción inmediata
+let currentSides = 6;
+let isAutoPlaying = true;
 let autoPlayTimer = null;
 let zoomActive = false;
 let pulsePhase = 0;
@@ -114,7 +114,6 @@ function initArchimedesLab() {
   const canvas = document.getElementById("circleCanvas");
   if (!canvas) return;
 
-  // Ajustar tamaño del canvas UNA SOLA VEZ
   setupCanvasResolution(canvas, 380, 380);
 
   const nButtons = document.querySelectorAll(".btn-n");
@@ -163,11 +162,8 @@ function initArchimedesLab() {
     setupCanvasResolution(canvas, 380, 380);
   });
 
-  // Iniciar autoplay de ciclo continuo de exhaución
   startAutoPlay();
   updateControlsUI();
-
-  // Bucle de renderizado continuo 60 FPS
   requestAnimationFrame(archimedesAnimationLoop);
 }
 
@@ -192,7 +188,7 @@ function startAutoPlay() {
     stepIndex = (stepIndex + 1) % archimedesSteps.length;
     currentSides = archimedesSteps[stepIndex];
     updateControlsUI();
-  }, 2200); // Cambia cada 2.2 segundos para apreciar la duplicación de lados
+  }, 2200);
 }
 
 function pauseAutoPlay() {
@@ -262,7 +258,7 @@ function updateArchimedesMetrics() {
 
 function archimedesAnimationLoop() {
   pulsePhase += 0.04;
-  rotationAngle += 0.005; // Rotación apreciable
+  rotationAngle += 0.005;
   renderArchimedesCanvas();
   requestAnimationFrame(archimedesAnimationLoop);
 }
@@ -285,11 +281,9 @@ function renderArchimedesCanvas() {
 
   ctx.clearRect(0, 0, cssSize, cssSize);
 
-  // 1. Fondo técnico
   ctx.fillStyle = "#0B132B";
   ctx.fillRect(0, 0, cssSize, cssSize);
 
-  // Cuadrícula sutil
   ctx.strokeStyle = "rgba(255, 255, 255, 0.04)";
   ctx.lineWidth = 1;
   const step = 20;
@@ -300,7 +294,6 @@ function renderArchimedesCanvas() {
     ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(cssSize, y); ctx.stroke();
   }
 
-  // Ejes cartesianos
   ctx.strokeStyle = "rgba(255, 255, 255, 0.12)";
   ctx.beginPath();
   ctx.moveTo(cx, 15); ctx.lineTo(cx, cssSize - 15);
@@ -311,7 +304,7 @@ function renderArchimedesCanvas() {
   const halfAngle = angleStep / 2;
   const R_circ = R / Math.cos(halfAngle);
 
-  // 2. POLÍGONO CIRCUNSCRITO (Dorado Exterior)
+  // Polígono circunscrito
   ctx.beginPath();
   for (let i = 0; i < n; i++) {
     const angle = i * angleStep + rotationAngle;
@@ -327,7 +320,7 @@ function renderArchimedesCanvas() {
   ctx.lineWidth = 2.5;
   ctx.stroke();
 
-  // 3. RADIOS VISUALES (Demostración geométrica viva)
+  // Radios visuales
   if (n <= 48) {
     ctx.strokeStyle = "rgba(255, 255, 255, 0.08)";
     ctx.lineWidth = 1;
@@ -340,7 +333,7 @@ function renderArchimedesCanvas() {
     }
   }
 
-  // 4. CIRCUNFERENCIA TEÓRICA (Blanco con pulso sutil de luz)
+  // Circunferencia
   ctx.beginPath();
   ctx.arc(cx, cy, R, 0, 2 * Math.PI);
   const glow = 0.7 + 0.3 * Math.sin(pulsePhase);
@@ -348,7 +341,7 @@ function renderArchimedesCanvas() {
   ctx.lineWidth = 2.5;
   ctx.stroke();
 
-  // 5. POLÍGONO INSCRITO (Azul Cian Interior)
+  // Polígono inscrito
   ctx.beginPath();
   for (let i = 0; i < n; i++) {
     const angle = i * angleStep - halfAngle + rotationAngle;
@@ -364,7 +357,6 @@ function renderArchimedesCanvas() {
   ctx.lineWidth = 2.5;
   ctx.stroke();
 
-  // Vértices del polígono inscrito resaltados
   if (n <= 48) {
     ctx.fillStyle = "#38BDF8";
     for (let i = 0; i < n; i++) {
@@ -377,13 +369,11 @@ function renderArchimedesCanvas() {
     }
   }
 
-  // Centro luminoso
   ctx.beginPath();
   ctx.arc(cx, cy, 3.5, 0, 2 * Math.PI);
   ctx.fillStyle = "#FFFFFF";
   ctx.fill();
 
-  // Indicador de Lados flotante sobre el Canvas
   ctx.fillStyle = "rgba(15, 23, 42, 0.85)";
   ctx.fillRect(15, 15, 130, 28);
   ctx.strokeStyle = "rgba(201, 162, 39, 0.6)";
@@ -392,7 +382,6 @@ function renderArchimedesCanvas() {
   ctx.font = "bold 12px 'Inter', sans-serif";
   ctx.fillText(`Polígono: ${n} lados`, 24, 34);
 
-  // 6. LUPA MICROSCÓPICA (Efecto de Exhaución ampliada 5X)
   if (zoomActive) {
     const zoomSize = 120;
     const zx = cssSize - zoomSize - 12;
@@ -411,14 +400,12 @@ function renderArchimedesCanvas() {
     ctx.scale(zoomScale, zoomScale);
     ctx.translate(-cx, -(cy - R));
 
-    // Circunferencia
     ctx.beginPath();
     ctx.arc(cx, cy, R, 0, 2 * Math.PI);
     ctx.strokeStyle = "#FFFFFF";
     ctx.lineWidth = 1 / zoomScale;
     ctx.stroke();
 
-    // Circunscrito
     ctx.beginPath();
     for (let i = 0; i < n; i++) {
       const angle = i * angleStep + rotationAngle;
@@ -432,7 +419,6 @@ function renderArchimedesCanvas() {
     ctx.lineWidth = 1.2 / zoomScale;
     ctx.stroke();
 
-    // Inscrito
     ctx.beginPath();
     for (let i = 0; i < n; i++) {
       const angle = i * angleStep - halfAngle + rotationAngle;
@@ -461,12 +447,15 @@ function renderArchimedesCanvas() {
 }
 
 /* ==========================================================================
-   4. SIMULACIÓN Y ANIMACIÓN EN VIVO: LEY DE LA PALANCA (F1 * d1 = F2 * d2)
+   4. SIMULACIÓN Y ANIMACIÓN EN VIVO: BALANZA MECÁNICA DE ALTA PRECISIÓN
    ========================================================================== */
 let leverF1 = 50;
-let leverD1 = 4;
+let leverD1 = 4.0;
 let leverF2 = 100;
-let leverD2 = 2;
+let leverD2 = 2.0;
+let leverMode = "auto"; // "auto" (didáctico) o "free" (modo desafío libre)
+
+// Física del oscilador armónico
 let leverAngle = 0;
 let leverAngularVel = 0;
 let leverTargetAngle = 0;
@@ -475,36 +464,73 @@ function initLeverLab() {
   const canvas = document.getElementById("leverCanvas");
   if (!canvas) return;
 
-  setupCanvasResolution(canvas, 380, 240);
+  setupCanvasResolution(canvas, 420, 270);
 
   const f1Input = document.getElementById("leverF1");
   const d1Input = document.getElementById("leverD1");
   const f2Input = document.getElementById("leverF2");
+  const d2Input = document.getElementById("leverD2");
+
+  const btnAuto = document.getElementById("btnModeAuto");
+  const btnFree = document.getElementById("btnModeFree");
+
+  if (btnAuto && btnFree) {
+    btnAuto.addEventListener("click", () => {
+      leverMode = "auto";
+      btnAuto.classList.add("btn-primary");
+      btnAuto.classList.remove("btn-secondary");
+      btnFree.classList.add("btn-secondary");
+      btnFree.classList.remove("btn-primary");
+      if (d2Input) d2Input.disabled = true;
+      applyLeverImpulse(0.04);
+      updateLeverData();
+    });
+
+    btnFree.addEventListener("click", () => {
+      leverMode = "free";
+      btnFree.classList.add("btn-primary");
+      btnFree.classList.remove("btn-secondary");
+      btnAuto.classList.add("btn-secondary");
+      btnAuto.classList.remove("btn-primary");
+      if (d2Input) d2Input.disabled = false;
+      applyLeverImpulse(-0.04);
+      updateLeverData();
+    });
+  }
 
   if (f1Input) {
     f1Input.addEventListener("input", (e) => {
       leverF1 = parseFloat(e.target.value);
-      applyLeverImpulse(0.06);
+      applyLeverImpulse(0.05);
       updateLeverData();
     });
   }
   if (d1Input) {
     d1Input.addEventListener("input", (e) => {
       leverD1 = parseFloat(e.target.value);
-      applyLeverImpulse(0.07);
+      applyLeverImpulse(0.06);
       updateLeverData();
     });
   }
   if (f2Input) {
     f2Input.addEventListener("input", (e) => {
       leverF2 = parseFloat(e.target.value);
-      applyLeverImpulse(-0.06);
+      applyLeverImpulse(-0.05);
       updateLeverData();
+    });
+  }
+  if (d2Input) {
+    d2Input.addEventListener("input", (e) => {
+      if (leverMode === "free") {
+        leverD2 = parseFloat(e.target.value);
+        applyLeverImpulse(-0.06);
+        updateLeverData();
+      }
     });
   }
 
   window.addEventListener("resize", () => {
-    setupCanvasResolution(canvas, 380, 240);
+    setupCanvasResolution(canvas, 420, 270);
   });
 
   updateLeverData();
@@ -516,21 +542,73 @@ function applyLeverImpulse(amount) {
 }
 
 function updateLeverData() {
-  leverD2 = (leverF1 * leverD1) / leverF2;
+  const d2Input = document.getElementById("leverD2");
 
+  if (leverMode === "auto") {
+    leverD2 = (leverF1 * leverD1) / leverF2;
+    // Acotar visualmente a 5m
+    if (leverD2 > 5) leverD2 = 5;
+    if (d2Input) d2Input.value = leverD2.toFixed(1);
+    leverTargetAngle = 0; // En modo auto siempre busca el equilibrio
+  } else {
+    // Modo libre: la balanza se inclina según el desbalance de momentos
+    const torque1 = leverF1 * leverD1;
+    const torque2 = leverF2 * leverD2;
+    const deltaTorque = torque1 - torque2;
+    
+    // Inclinación máxima de ±14 grados (±0.24 rad)
+    leverTargetAngle = -Math.max(-0.24, Math.min(0.24, deltaTorque / 280));
+  }
+
+  const torque1 = leverF1 * leverD1;
+  const torque2 = leverF2 * leverD2;
+  const deltaTorque = Math.abs(torque1 - torque2);
+  const mechanicalAdv = (leverD1 / leverD2);
+
+  // Actualizar DOM
   const f1Val = document.getElementById("valF1");
   const d1Val = document.getElementById("valD1");
   const f2Val = document.getElementById("valF2");
   const d2Val = document.getElementById("valD2");
   const torque1Val = document.getElementById("valTorque1");
   const torque2Val = document.getElementById("valTorque2");
+  const mechAdvVal = document.getElementById("valMechanicalAdv");
+  const netTorqueVal = document.getElementById("valNetTorque");
+  const statusBadge = document.getElementById("leverStatusBadge");
 
   if (f1Val) f1Val.textContent = `${leverF1} kg`;
   if (d1Val) d1Val.textContent = `${leverD1.toFixed(1)} m`;
   if (f2Val) f2Val.textContent = `${leverF2} kg`;
   if (d2Val) d2Val.textContent = `${leverD2.toFixed(2)} m`;
-  if (torque1Val) torque1Val.textContent = `${(leverF1 * leverD1).toFixed(1)} kg·m`;
-  if (torque2Val) torque2Val.textContent = `${(leverF2 * leverD2).toFixed(1)} kg·m`;
+  if (torque1Val) torque1Val.textContent = `${torque1.toFixed(1)} kg·m`;
+  if (torque2Val) torque2Val.textContent = `${torque2.toFixed(1)} kg·m`;
+  
+  if (mechAdvVal) {
+    mechAdvVal.textContent = `${mechanicalAdv.toFixed(2)}× (Ventaja mecánica: ${mechanicalAdv >= 1 ? 'Multiplica la fuerza' : 'Requiere más esfuerzo'})`;
+  }
+
+  if (netTorqueVal) {
+    if (deltaTorque <= 2) {
+      netTorqueVal.textContent = "0.0 kg·m (Equilibrio)";
+      netTorqueVal.style.color = "#16A34A";
+    } else {
+      netTorqueVal.textContent = `${(torque1 - torque2).toFixed(1)} kg·m`;
+      netTorqueVal.style.color = "#DC2626";
+    }
+  }
+
+  if (statusBadge) {
+    if (deltaTorque <= 2) {
+      statusBadge.textContent = "● EQUILIBRIO PERFECTO";
+      statusBadge.className = "badge-balanced";
+    } else if (torque1 > torque2) {
+      statusBadge.textContent = "◀ INCLINADA A LA IZQUIERDA (M₁ > M₂)";
+      statusBadge.className = "badge-unbalanced";
+    } else {
+      statusBadge.textContent = "▶ INCLINADA A LA DERECHA (M₂ > M₁)";
+      statusBadge.className = "badge-unbalanced";
+    }
+  }
 }
 
 function leverAnimationLoop() {
@@ -551,92 +629,266 @@ function renderLeverCanvas() {
 
   const ctx = canvas.getContext("2d");
   const dpr = window.devicePixelRatio || 1;
-  const width = 380;
-  const height = 240;
+  const width = 420;
+  const height = 270;
 
   ctx.save();
   ctx.scale(dpr, dpr);
 
   ctx.clearRect(0, 0, width, height);
 
-  ctx.fillStyle = "#0B132B";
+  // 1. Fondo de gabinete científico renacentista
+  const bgGrad = ctx.createRadialGradient(width / 2, height / 2, 20, width / 2, height / 2, width * 0.7);
+  bgGrad.addColorStop(0, "#132144");
+  bgGrad.addColorStop(1, "#070E1E");
+  ctx.fillStyle = bgGrad;
   ctx.fillRect(0, 0, width, height);
 
   const fulcrumX = width / 2;
-  const fulcrumY = height * 0.65;
-  const beamLength = width * 0.85;
+  const fulcrumY = height * 0.58;
+  const beamLength = width * 0.84;
+  const maxMeters = 5.0;
+  const pxPerMeter = (beamLength / 2) / maxMeters;
 
-  // 1. Suelo
-  ctx.strokeStyle = "rgba(255, 255, 255, 0.2)";
-  ctx.lineWidth = 2;
+  // 2. Pedestal Clásico de Piedra y Bronce
+  // Base inferior
+  ctx.fillStyle = "#1E293B";
+  ctx.strokeStyle = "#475569";
+  ctx.lineWidth = 1.5;
+  ctx.fillRect(fulcrumX - 60, height - 25, 120, 16);
+  ctx.strokeRect(fulcrumX - 60, height - 25, 120, 16);
+
+  // Columna central cónica de bronce
+  const colGrad = ctx.createLinearGradient(fulcrumX - 25, fulcrumY, fulcrumX + 25, height - 25);
+  colGrad.addColorStop(0, "#E5C048");
+  colGrad.addColorStop(0.4, "#C9A227");
+  colGrad.addColorStop(1, "#78580D");
+  ctx.fillStyle = colGrad;
   ctx.beginPath();
-  ctx.moveTo(15, fulcrumY + 35);
-  ctx.lineTo(width - 15, fulcrumY + 35);
+  ctx.moveTo(fulcrumX - 16, fulcrumY + 6);
+  ctx.lineTo(fulcrumX + 16, fulcrumY + 6);
+  ctx.lineTo(fulcrumX + 32, height - 25);
+  ctx.lineTo(fulcrumX - 32, height - 25);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = "#F1E5AC";
+  ctx.lineWidth = 1;
   ctx.stroke();
 
-  // 2. Fulcro de Arquímedes
+  // 3. Limbo semicircular de grados (Indicador superior de nivelación)
+  ctx.save();
   ctx.beginPath();
-  ctx.moveTo(fulcrumX, fulcrumY);
-  ctx.lineTo(fulcrumX - 22, fulcrumY + 35);
-  ctx.lineTo(fulcrumX + 22, fulcrumY + 35);
-  ctx.closePath();
-  ctx.fillStyle = "#C9A227";
+  ctx.arc(fulcrumX, fulcrumY, 38, Math.PI, 2 * Math.PI);
+  ctx.strokeStyle = "rgba(201, 162, 39, 0.4)";
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  // Marcas de escala en el limbo
+  for (let deg = -20; deg <= 20; deg += 10) {
+    const rad = (deg - 90) * (Math.PI / 180);
+    const x1 = fulcrumX + 34 * Math.cos(rad);
+    const y1 = fulcrumY + 34 * Math.sin(rad);
+    const x2 = fulcrumX + 40 * Math.cos(rad);
+    const y2 = fulcrumY + 40 * Math.sin(rad);
+
+    ctx.strokeStyle = (deg === 0) ? "#10B981" : "rgba(255, 255, 255, 0.4)";
+    ctx.lineWidth = (deg === 0) ? 2 : 1;
+    ctx.beginPath();
+    ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+  }
+  ctx.restore();
+
+  // 4. BARRA DE LA BALANZA CON ROTACIÓN FÍSICA
+  ctx.save();
+  ctx.translate(fulcrumX, fulcrumY);
+  ctx.rotate(leverAngle);
+
+  // Fiel o aguja vertical rígidamente fijada a la barra
+  ctx.strokeStyle = "#E5C048";
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(0, 0);
+  ctx.lineTo(0, -36);
+  ctx.stroke();
+  ctx.fillStyle = "#FFFFFF";
+  ctx.beginPath();
+  ctx.arc(0, -36, 2.5, 0, 2 * Math.PI);
+  ctx.fill();
+
+  // Viga metálica de latón
+  const beamGrad = ctx.createLinearGradient(0, -5, 0, 5);
+  beamGrad.addColorStop(0, "#F5E6B3");
+  beamGrad.addColorStop(0.5, "#C9A227");
+  beamGrad.addColorStop(1, "#6B4E08");
+  ctx.fillStyle = beamGrad;
+  ctx.strokeStyle = "#FFFFFF";
+  ctx.lineWidth = 1;
+
+  ctx.beginPath();
+  ctx.roundRect(-beamLength / 2, -5, beamLength, 10, 3);
+  ctx.fill();
+  ctx.stroke();
+
+  // Regla graduada milimetrada sobre la viga (Marcas métricas de -5m a +5m)
+  ctx.fillStyle = "#1E293B";
+  ctx.font = "8px 'Inter', monospace";
+  ctx.textAlign = "center";
+  for (let m = -5; m <= 5; m++) {
+    const mx = m * pxPerMeter;
+    ctx.beginPath();
+    ctx.moveTo(mx, -5);
+    ctx.lineTo(mx, -1);
+    ctx.strokeStyle = "rgba(0, 0, 0, 0.5)";
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    if (m !== 0 && Math.abs(m) <= 5) {
+      ctx.fillText(`${Math.abs(m)}m`, mx, 3);
+    }
+  }
+
+  // Puntos de suspensión para las cargas
+  const leftX = -leverD1 * pxPerMeter;
+  const rightX = leverD2 * pxPerMeter;
+
+  // Ganchos deslizantes sobre la barra
+  ctx.fillStyle = "#E2E8F0";
+  ctx.beginPath();
+  ctx.arc(leftX, 0, 4, 0, 2 * Math.PI);
+  ctx.arc(rightX, 0, 4, 0, 2 * Math.PI);
+  ctx.fill();
+
+  // 5. PLATILLOS Y PESAS SUSPENDIDAS (Verticales por gravedad)
+  // Platillo 1 (Izquierdo)
+  ctx.save();
+  ctx.translate(leftX, 0);
+  ctx.rotate(-leverAngle); // Contrarotación para que cuelguen siempre verticales
+
+  // Cadenas de suspensión
+  const chainLen = 48;
+  ctx.strokeStyle = "rgba(226, 232, 240, 0.7)";
+  ctx.lineWidth = 1.2;
+  ctx.beginPath();
+  ctx.moveTo(0, 0); ctx.lineTo(-18, chainLen);
+  ctx.moveTo(0, 0); ctx.lineTo(18, chainLen);
+  ctx.stroke();
+
+  // Platillo de latón
+  ctx.fillStyle = "#CBD5E1";
+  ctx.beginPath();
+  ctx.ellipse(0, chainLen, 24, 5, 0, 0, Math.PI);
+  ctx.fill();
+  ctx.strokeStyle = "#94A3B8";
+  ctx.stroke();
+
+  // Pesa clásica (Azul Cian)
+  const weightH1 = Math.min(20 + (leverF1 / 5), 45);
+  const weightW1 = Math.min(18 + (leverF1 / 7), 36);
+
+  const pGrad1 = ctx.createLinearGradient(-weightW1/2, chainLen - weightH1, weightW1/2, chainLen);
+  pGrad1.addColorStop(0, "#7DD3FC");
+  pGrad1.addColorStop(0.5, "#0284C7");
+  pGrad1.addColorStop(1, "#0369A1");
+  ctx.fillStyle = pGrad1;
+
+  ctx.beginPath();
+  ctx.roundRect(-weightW1 / 2, chainLen - weightH1, weightW1, weightH1, 3);
+  ctx.fill();
+  ctx.strokeStyle = "#FFFFFF";
+  ctx.lineWidth = 1;
+  ctx.stroke();
+
+  // Asa superior de la pesa
+  ctx.strokeStyle = "#E2E8F0";
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.arc(0, chainLen - weightH1, 4, Math.PI, 2 * Math.PI);
+  ctx.stroke();
+
+  // Texto de la pesa
+  ctx.fillStyle = "#FFFFFF";
+  ctx.font = "bold 10px 'Inter', sans-serif";
+  ctx.fillText(`${leverF1}kg`, 0, chainLen - (weightH1 / 2) + 4);
+
+  // Etiqueta de distancia bajo el platillo
+  ctx.fillStyle = "#38BDF8";
+  ctx.font = "bold 10px 'Inter', sans-serif";
+  ctx.fillText(`${leverD1.toFixed(1)}m`, 0, chainLen + 15);
+
+  ctx.restore();
+
+  // Platillo 2 (Derecho)
+  ctx.save();
+  ctx.translate(rightX, 0);
+  ctx.rotate(-leverAngle); // Contrarotación para verticalidad
+
+  // Cadenas de suspensión
+  ctx.strokeStyle = "rgba(226, 232, 240, 0.7)";
+  ctx.lineWidth = 1.2;
+  ctx.beginPath();
+  ctx.moveTo(0, 0); ctx.lineTo(-18, chainLen);
+  ctx.moveTo(0, 0); ctx.lineTo(18, chainLen);
+  ctx.stroke();
+
+  // Platillo
+  ctx.fillStyle = "#E5C048";
+  ctx.beginPath();
+  ctx.ellipse(0, chainLen, 24, 5, 0, 0, Math.PI);
+  ctx.fill();
+  ctx.strokeStyle = "#C9A227";
+  ctx.stroke();
+
+  // Pesa clásica (Dorada / Latón)
+  const weightH2 = Math.min(20 + (leverF2 / 5), 45);
+  const weightW2 = Math.min(18 + (leverF2 / 7), 36);
+
+  const pGrad2 = ctx.createLinearGradient(-weightW2/2, chainLen - weightH2, weightW2/2, chainLen);
+  pGrad2.addColorStop(0, "#FDE047");
+  pGrad2.addColorStop(0.5, "#D97706");
+  pGrad2.addColorStop(1, "#92400E");
+  ctx.fillStyle = pGrad2;
+
+  ctx.beginPath();
+  ctx.roundRect(-weightW2 / 2, chainLen - weightH2, weightW2, weightH2, 3);
+  ctx.fill();
+  ctx.strokeStyle = "#FFFFFF";
+  ctx.lineWidth = 1;
+  ctx.stroke();
+
+  // Asa superior
+  ctx.strokeStyle = "#FDE047";
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.arc(0, chainLen - weightH2, 4, Math.PI, 2 * Math.PI);
+  ctx.stroke();
+
+  // Texto de la pesa
+  ctx.fillStyle = "#FFFFFF";
+  ctx.font = "bold 10px 'Inter', sans-serif";
+  ctx.fillText(`${leverF2}kg`, 0, chainLen - (weightH2 / 2) + 4);
+
+  // Etiqueta de distancia bajo el platillo
+  ctx.fillStyle = "#E5C048";
+  ctx.font = "bold 10px 'Inter', sans-serif";
+  ctx.fillText(`${leverD2.toFixed(2)}m`, 0, chainLen + 15);
+
+  ctx.restore();
+
+  ctx.restore(); // Fin de la rotación de la barra
+
+  // 6. Pivote Central (Cojinete central dorado en el fulcro)
+  ctx.beginPath();
+  ctx.arc(fulcrumX, fulcrumY, 8, 0, 2 * Math.PI);
+  ctx.fillStyle = "#E5C048";
   ctx.fill();
   ctx.strokeStyle = "#FFFFFF";
   ctx.lineWidth = 1.5;
   ctx.stroke();
 
-  // 3. Barra con inclinación animada
-  ctx.save();
-  ctx.translate(fulcrumX, fulcrumY);
-  ctx.rotate(leverAngle);
-
-  ctx.strokeStyle = "#E2E8F0";
-  ctx.lineWidth = 6;
   ctx.beginPath();
-  ctx.moveTo(-beamLength / 2, 0);
-  ctx.lineTo(beamLength / 2, 0);
-  ctx.stroke();
-
-  // Cargas
-  const maxMeters = 5;
-  const pxPerMeter = (beamLength / 2) / maxMeters;
-  const pos1X = -Math.min(leverD1 * pxPerMeter, (beamLength / 2) - 10);
-  const pos2X = Math.min(leverD2 * pxPerMeter, (beamLength / 2) - 10);
-
-  // Carga 1
-  const size1 = Math.min(14 + (leverF1 / 5), 36);
-  ctx.fillStyle = "#38BDF8";
-  ctx.fillRect(pos1X - (size1 / 2), -size1 - 3, size1, size1);
-  ctx.strokeStyle = "#FFFFFF";
-  ctx.lineWidth = 1;
-  ctx.strokeRect(pos1X - (size1 / 2), -size1 - 3, size1, size1);
-
-  ctx.fillStyle = "#FFFFFF";
-  ctx.font = "11px 'Inter', sans-serif";
-  ctx.textAlign = "center";
-  ctx.fillText(`${leverF1}kg`, pos1X, -size1 - 7);
-  ctx.fillText(`${leverD1.toFixed(1)}m`, pos1X, 16);
-
-  // Carga 2
-  const size2 = Math.min(14 + (leverF2 / 5), 44);
-  ctx.fillStyle = "#E5C048";
-  ctx.fillRect(pos2X - (size2 / 2), -size2 - 3, size2, size2);
-  ctx.strokeStyle = "#FFFFFF";
-  ctx.lineWidth = 1;
-  ctx.strokeRect(pos2X - (size2 / 2), -size2 - 3, size2, size2);
-
-  ctx.fillStyle = "#FFFFFF";
-  ctx.fillText(`${leverF2}kg`, pos2X, -size2 - 7);
-  ctx.fillText(`${leverD2.toFixed(2)}m`, pos2X, 16);
-
-  ctx.restore();
-
-  // Ecuación
-  ctx.fillStyle = "#E2E8F0";
-  ctx.font = "12px 'Inter', sans-serif";
-  ctx.textAlign = "center";
-  ctx.fillText(`F₁ · d₁ = F₂ · d₂   →   (${leverF1} × ${leverD1.toFixed(1)}) = (${leverF2} × ${leverD2.toFixed(2)})`, fulcrumX, 28);
+  ctx.arc(fulcrumX, fulcrumY, 3, 0, 2 * Math.PI);
+  ctx.fillStyle = "#0B132B";
+  ctx.fill();
 
   ctx.restore();
 }
