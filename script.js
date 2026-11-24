@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initGuionToggle();
   initScrollTop();
   initLightboxModal();
+  initEssayLangToggle();
 });
 
 /* ==========================================================================
@@ -988,5 +989,29 @@ function initLightboxModal() {
     if (e.key === "Escape" && modal.classList.contains("open")) {
       closeModal();
     }
+  });
+}
+
+
+/* ==========================================================================
+   8. SELECTOR BILINGÜE PARA EL ENSAYO ARGUMENTATIVO (FASE 4)
+   ========================================================================== */
+function initEssayLangToggle() {
+  const langBtns = document.querySelectorAll(".btn-lang");
+  const langViews = document.querySelectorAll(".essay-lang-view");
+
+  langBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const targetLang = btn.getAttribute("data-lang");
+
+      langBtns.forEach(b => b.classList.remove("active"));
+      langViews.forEach(v => v.classList.remove("active"));
+
+      btn.classList.add("active");
+      const activeView = document.getElementById(`essay-${targetLang}`);
+      if (activeView) activeView.classList.add("active");
+
+      initKaTeX();
+    });
   });
 }

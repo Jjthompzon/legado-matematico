@@ -1397,3 +1397,142 @@ input[type=range]:disabled::-webkit-slider-thumb {
   color: var(--navy-dark);
   transform: scale(1.1);
 }
+
+
+/* ==========================================================================
+   ESTILOS PARA LA SECCIÓN DE ENSAYO ARGUMENTATIVO EN INGLÉS (FASE 4)
+   ========================================================================== */
+
+.essay-card {
+  background: #FFFFFF;
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem;
+  box-shadow: var(--shadow-md);
+  position: relative;
+}
+
+.essay-header-badge {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-light);
+  padding-bottom: 1.25rem;
+}
+
+.essay-meta-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(201, 162, 39, 0.15);
+  color: #92400E;
+  font-weight: 700;
+  font-size: 0.82rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 50px;
+  border: 1px solid var(--border-gold);
+}
+
+.essay-lang-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn-lang {
+  background: var(--surface-alt);
+  border: 1px solid var(--border-light);
+  padding: 0.45rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  color: var(--primary-navy);
+  transition: var(--transition);
+}
+
+.btn-lang.active, .btn-lang:hover {
+  background: var(--primary-navy);
+  color: #FFFFFF;
+  border-color: var(--primary-navy);
+}
+
+.essay-title-area h4 {
+  font-size: 1.85rem;
+  color: var(--primary-navy);
+  line-height: 1.3;
+  margin-bottom: 0.5rem;
+}
+
+.essay-title-area .essay-byline {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-bottom: 1.75rem;
+  font-style: italic;
+}
+
+.essay-abstract-box {
+  background: linear-gradient(135deg, rgba(27, 47, 85, 0.04), rgba(201, 162, 39, 0.08));
+  border-left: 4px solid var(--accent-gold);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 1.25rem 1.6rem;
+  margin-bottom: 2rem;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: #1E293B;
+}
+
+.essay-abstract-box strong {
+  color: var(--primary-navy);
+  text-transform: uppercase;
+  font-size: 0.82rem;
+  letter-spacing: 1px;
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
+.essay-body-content h5 {
+  font-size: 1.25rem;
+  color: var(--primary-navy);
+  margin: 1.85rem 0 0.65rem;
+  font-family: 'Cinzel', serif;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.essay-body-content h5::before {
+  content: "§";
+  color: var(--accent-gold);
+  font-size: 1.1rem;
+}
+
+.essay-body-content p {
+  font-size: 0.98rem;
+  line-height: 1.75;
+  color: var(--text-main);
+  text-align: justify;
+  margin-bottom: 1.15rem;
+}
+
+.essay-math-highlight {
+  background: #F8F9FA;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 0.85rem;
+  margin: 1rem 0;
+  text-align: center;
+  font-size: 1.15rem;
+  color: var(--primary-navy);
+}
+
+.essay-lang-view {
+  display: none;
+}
+
+.essay-lang-view.active {
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
