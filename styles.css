@@ -69,32 +69,41 @@ a:hover {
   position: sticky;
   top: 0;
   z-index: 1000;
-  background-color: rgba(27, 47, 85, 0.98);
-  backdrop-filter: blur(8px);
+  background: rgba(15, 29, 54, 0.96);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-bottom: 2px solid var(--accent-gold);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.25);
+  transition: var(--transition);
 }
 
 .nav-container {
-  max-width: 1280px;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 0.75rem 1.5rem;
+  padding: 0.6rem 1.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1rem;
 }
 
 .brand {
   display: flex;
   align-items: center;
-  gap: 0.85rem;
+  gap: 0.75rem;
   color: #FFFFFF;
   text-decoration: none;
+  flex-shrink: 0;
+  transition: var(--transition);
+}
+
+.brand:hover {
+  transform: translateY(-1px);
 }
 
 .brand-icon {
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
   background: linear-gradient(135deg, var(--accent-gold), #997300);
   border-radius: 50%;
   display: flex;
@@ -102,55 +111,128 @@ a:hover {
   justify-content: center;
   color: var(--navy-dark);
   font-weight: 800;
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   box-shadow: var(--shadow-gold);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  flex-shrink: 0;
 }
 
 .brand-text h1 {
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   color: #FFFFFF;
   margin: 0;
-  letter-spacing: 1px;
+  letter-spacing: 0.8px;
+  white-space: nowrap;
 }
 
 .brand-text p {
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   color: var(--accent-gold);
   text-transform: uppercase;
-  letter-spacing: 1.2px;
+  letter-spacing: 1.1px;
   font-weight: 600;
+  margin: 0;
+  white-space: nowrap;
 }
 
+/* Botones de Navegación Estilizados */
 .nav-links {
   display: flex;
   list-style: none;
-  gap: 1.25rem;
+  gap: clamp(0.2rem, 0.45vw, 0.55rem);
   align-items: center;
+  margin: 0;
+  padding: 0;
 }
 
-.nav-links a {
-  color: #E2E8F0;
-  font-size: 0.88rem;
+.nav-links li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a, .nav-btn {
+  color: #CBD5E1;
+  font-size: clamp(0.76rem, 0.82vw, 0.85rem);
   font-weight: 500;
-  padding: 0.45rem 0.85rem;
-  border-radius: var(--radius-sm);
-  transition: var(--transition);
+  font-family: 'Inter', sans-serif;
+  padding: 0.45rem clamp(0.5rem, 0.65vw, 0.8rem);
+  border-radius: 20px;
+  text-decoration: none;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  border: 1px solid transparent;
+  background: transparent;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  letter-spacing: 0.2px;
+  cursor: pointer;
 }
 
-.nav-links a:hover, .nav-links a.active {
+.nav-links a:hover, .nav-btn:hover {
   color: #FFFFFF;
-  background-color: rgba(201, 162, 39, 0.2);
-  border-bottom: 2px solid var(--accent-gold);
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(201, 162, 39, 0.35);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.nav-links a.active, .nav-btn.active {
+  color: #FFFFFF;
+  font-weight: 600;
+  background: linear-gradient(135deg, rgba(201, 162, 39, 0.28) 0%, rgba(201, 162, 39, 0.12) 100%);
+  border-color: var(--accent-gold);
+  box-shadow: 0 2px 10px rgba(201, 162, 39, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* Botón Destacado: Ensayo */
+.nav-btn-featured {
+  background: rgba(201, 162, 39, 0.12) !important;
+  border: 1px solid rgba(201, 162, 39, 0.55) !important;
+  color: #FFFFFF !important;
+}
+
+.nav-btn-featured:hover {
+  background: rgba(201, 162, 39, 0.25) !important;
+  border-color: var(--accent-gold) !important;
+  box-shadow: 0 4px 14px rgba(201, 162, 39, 0.35) !important;
+}
+
+.nav-tag {
+  background: linear-gradient(135deg, var(--accent-gold), #B58D1B);
+  color: var(--navy-dark);
+  font-size: 0.62rem;
+  font-weight: 800;
+  padding: 0.12rem 0.4rem;
+  border-radius: 10px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  display: inline-block;
+  line-height: 1.1;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .nav-toggle {
   display: none;
-  background: none;
-  border: none;
-  color: #FFFFFF;
-  font-size: 1.5rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(201, 162, 39, 0.4);
+  border-radius: 8px;
+  color: var(--accent-gold);
+  width: 42px;
+  height: 42px;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
   cursor: pointer;
+  transition: var(--transition);
+}
+
+.nav-toggle:hover {
+  background: rgba(201, 162, 39, 0.2);
+  border-color: var(--accent-gold);
+  color: #FFFFFF;
 }
 
 /* Banner de Notificación Académica */
@@ -1011,29 +1093,52 @@ footer {
 }
 
 /* Responsividad */
-@media (max-width: 900px) {
-  .hero h2 {
-    font-size: 2.1rem;
-  }
-  .welcome-grid, .character-body-grid, .video-card, .lab-view.active, .footer-container {
-    grid-template-columns: 1fr;
-  }
+@media (max-width: 1160px) {
   .nav-links {
     display: none;
     position: absolute;
     top: 100%;
     left: 0;
     right: 0;
-    background-color: var(--navy-dark);
+    background-color: rgba(15, 29, 54, 0.98);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
     flex-direction: column;
-    padding: 1.5rem;
+    padding: 1.25rem 1.5rem;
+    gap: 0.5rem;
     border-bottom: 2px solid var(--accent-gold);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
   }
   .nav-links.open {
     display: flex;
+    animation: fadeInNav 0.22s ease-out;
+  }
+  .nav-links a, .nav-btn {
+    width: 100%;
+    padding: 0.7rem 1.2rem;
+    font-size: 0.92rem;
+    justify-content: flex-start;
+    border-radius: 10px;
+  }
+  .nav-btn-featured {
+    justify-content: space-between !important;
   }
   .nav-toggle {
-    display: block;
+    display: flex;
+  }
+}
+
+@keyframes fadeInNav {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 900px) {
+  .hero h2 {
+    font-size: 2.1rem;
+  }
+  .welcome-grid, .character-body-grid, .video-card, .lab-view.active, .footer-container {
+    grid-template-columns: 1fr;
   }
 }
 
