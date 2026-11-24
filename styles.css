@@ -235,19 +235,7 @@ a:hover {
   color: #FFFFFF;
 }
 
-/* Banner de Notificación Académica */
-.top-notice {
-  background-color: var(--navy-dark);
-  color: #CBD5E1;
-  font-size: 0.78rem;
-  text-align: center;
-  padding: 0.4rem 1rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-}
 
-.top-notice strong {
-  color: var(--accent-gold);
-}
 
 /* Hero Section */
 .hero {
